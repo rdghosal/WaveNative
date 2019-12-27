@@ -14,7 +14,7 @@ Specifically, the following technologies are used:
 - [WaveSurfer.js](https://wavesurfer-js.org/) (libary for sound visualizations) 
 ### 2. Back-End (Python)
 - Flask (microframework for API routing)
-- [Parselmouth](https://parselmouth.readthedocs.io/en/stable/) (library for Praat via Python to provide audio processing and quantitative feedback) - TBD
+- [Parselmouth](https://parselmouth.readthedocs.io/en/stable/) (library for Praat via Python to provide audio processing and quantitative feedback) - Adoption TBD
 ### 3. Database (SQL)
 - PostgreSQL via Heroku
 ### 4. Third-party APIs
