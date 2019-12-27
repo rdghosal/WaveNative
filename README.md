@@ -1,4 +1,5 @@
 # WaveNative
+Last updated: 27 December 2019
 ## 1. Purpose
 WaveNative is a single-page web application that provides users soundwave visualizations of native pronunciations<br>
 and allows them to emulate the same.
@@ -16,7 +17,7 @@ Specifically, the following technologies are used:
 - [Parselmouth](https://parselmouth.readthedocs.io/en/stable/) (library for Praat via Python to provide audio processing and quantitative feedback) - TBD
 ### 3. Database (SQL)
 - PostgreSQL via Heroku
-### 4. Third-party (API)
+### 4. Third-party APIs
 - [Merriam-Webster](https://dictionaryapi.com/) for native English audio recordings
 
 ## 3. TODO
