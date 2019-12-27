@@ -1,0 +1,71 @@
+{
+  "name": "wave-native",
+  "version": "1.0.0",
+  "description": "A (progressive) web application intending to assist ESL learners by visualizing their pronunciation of English words versus that of a native speaker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress -d --config webpack.config.js --watch"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      [
+        "@babel/transform-runtime"
+      ]
+    ]
+  },
+  "proxy": "http://localhost:5000",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdghosal/WaveNative.git"
+  },
+  "keywords": [
+    "ESL",
+    "pronunciation",
+    "waveform",
+    "pwa",
+    "web",
+    "app",
+    "python",
+    "flask",
+    "react"
+  ],
+  "author": "Rahul D. Ghosal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdghosal/WaveNative/issues"
+  },
+  "homepage": "https://github.com/rdghosal/WaveNative#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "file-loader": "^4.2.0",
+    "image-webpack-loader": "^6.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "axios": "^0.19.0",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.0.6",
+    "es6-promise-promise": "^1.0.0",
+    "jshint": "^2.10.2",
+    "query-string": "^6.8.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
+    "wavesurfer.js": "^3.0.0"
+  }
+}
