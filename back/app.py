@@ -2,7 +2,7 @@
 # from sqlalchemy.orm import scoped_session, sessionmaker
 import models
 import user_controller, search_controller, static_controller
-from flask import Flask, session, redirect
+from flask import Flask
 from flask_session import Session
 from flask_login import LoginManager
 from tempfile import mkdtemp
