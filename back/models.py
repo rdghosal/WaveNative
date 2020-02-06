@@ -1,10 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 
-# Exported isntance
+# Exported instance
 db = SQLAlchemy()
 
-# Table for user info
 class Users(db.Model):
+    """Table for user info"""
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)

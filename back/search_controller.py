@@ -3,13 +3,15 @@ from io import BytesIO
 from flask import Blueprint, request, jsonify, send_file, session
 
 
-# Init blueprint used by app.py
+# To be registered by app.py
 blueprint = Blueprint("search_controller", __name__)
 
 
 # Get URL for audio file retrieval
 @blueprint.route("/api/search")
 def search():
+    """Searches Merriam Webster (MW) for word
+    and caches URL file thereof if valid"""
     api_key = os.getenv("API_KEY")
     session["current_word"] = request.args.get("word")
     session[session["current_word"]] = None
@@ -27,17 +29,14 @@ def search():
 
 
 @blueprint.route("/api/waveify")
-def get_waveform():
-    # from parselmouth.CC import get_total_duration
-
+def get_wav_data():
+    """Sends wav data from MW API"""
     # Get binary data from MW API and cache 
     data = requests.get(session["current_audio_url"]).content
     session[session["current_word"]] = data 
 
     # Send wav file to client
-    return send_file(
-        BytesIO(data),
-        mimetype='audio/wav')
+    return send_file(BytesIO(data), mimetype='audio/wav')
 
 
 @blueprint.route("/api/history")

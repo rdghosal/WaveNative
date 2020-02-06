@@ -4,9 +4,15 @@ import models
 import user_controller, search_controller, static_controller
 from flask import Flask, session, redirect
 from flask_session import Session
+from flask_login import LoginManager
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from helpers import login_required, apology
+
+
+# Config variables
+login_manager = LoginManager()
+sess = Session()
 
 
 # TODO: Edit error handler
@@ -21,6 +27,11 @@ def create_app():
     """Configures and returns app instance"""
     app = Flask(__name__, static_folder="../front/dist", template_folder="../front/templates")
 
+    # Register blueprint
+    app.register_blueprint(static_controller.blueprint)
+    app.register_blueprint(search_controller.blueprint)
+    app.register_blueprint(user_controller.blueprint)
+
     # For development
     app.config["DEBUG"] = True
 
@@ -32,12 +43,10 @@ def create_app():
     app.config["SESSION_FILE_DIR"] = mkdtemp()
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
-    Session(app)
+    sess.init_app(app)
 
-    # Register blueprint
-    app.register_blueprint(static_controller.blueprint)
-    app.register_blueprint(search_controller.blueprint)
-    app.register_blueprint(user_controller.blueprint)
+    # Login configuration
+    login_manager.init_app(app)
 
     # SQLAlchemy ORM config
     app.config["SQLALCHEMY_DATABASE_URI"] = ''
