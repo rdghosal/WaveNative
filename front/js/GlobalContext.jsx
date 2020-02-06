@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import "../css/GlobalContext.css";
+import React, { useState } from "react"
 
+// Context instance
 export const GlobalContext = React.createContext();
 
-export const GlobalProvider = ({ children }) => {
-    const [ searchHistory, updateHistory ] = useState([]);
+export const GlobalProvider = (props) => {
+    // Caches userId to communicate w/ back-end
+    const [ userId, cacheUserId ] = useState(null);
 
     return (
-        <GlobalContext.Provider value={{ searchHistory, updateHistory }}>
-            { children }
-        </GlobalContext.Provider> 
-    );
+        <GlobalContext.Provider value={ userId, cacheUserId }>
+            { props.children }
+        </GlobalContext.Provider>
+    );    
 }
