@@ -10,11 +10,12 @@ const Wave = ({ type, word }) => {
     const { hasPlayed, setPlayed, micOn, toggleMic } = useContext(SearchContext);
     const [ wavesurfer, setWaveSurfer ] = useState(null);
 
-    const appendUserData = data => {
+    function appendUserData(data) {
         // Update wordList by appending user-recorded data
         updateWordList(() => {
-            word.userData = data;
-            wordList[wordList.length-1] = word;
+            let temp = [...wordList];
+            temp[temp.length-1].userData = data;
+            updateWordList(temp);
         });
     }
 
@@ -32,6 +33,7 @@ const Wave = ({ type, word }) => {
                 wavesurfer.microphone.start();
                 wavesurfer.microphone.play();
             }, 250);
+
         } else {
             // Load data into wavesurfer
             let blob = (type === WaveTypes.native) ? word.audioData : word.userData;
@@ -59,7 +61,8 @@ const Wave = ({ type, word }) => {
                         &&  (
                                 <button className="btn btn-outline" onClick={ () => { 
                                     wavesurfer.microphone.stop(); 
-                                    toggleMic(false); 
+                                    wavesurfer.destroy();
+                                    toggleMic(false);
                                 }}>Stop</button>
                             )
                 }

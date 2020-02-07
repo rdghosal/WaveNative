@@ -24,6 +24,9 @@ export const Search = () => {
                     <SearchBar />
                     <div className="wave-container">
                         {
+                            console.log(wordList)
+                        }
+                        {
                             wordList.length > 0
                                 && <Wave type={ WaveTypes.native } word={ wordList[wordList.length-1] } /> 
                         }
