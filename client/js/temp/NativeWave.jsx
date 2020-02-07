@@ -39,7 +39,7 @@ const NativeWave = () => {
                 waveColor: "rgba(0, 44, 102, 0.60)",
                 progressColor: "rgba(0, 44, 102, 1.0)",
                 barHeight: 1.75
-                });
+        });
 
         wavesurfer.load("/api/waveify");
 

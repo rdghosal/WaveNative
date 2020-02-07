@@ -11,13 +11,12 @@ class Word {
 }
 
 const SearchBar = () => {
-    const { wordList, pushWord } = useContext(GlobalContext);
-    const { currentWord, memoWord } = useContext(SearchContext);
+    const { wordList, updateWordList } = useContext(GlobalContext);
+    // const { currentWord, memoWord } = useContext(SearchContext);
 
-    useEffect(() => {
-        console.log(wordList);
-        console.log(currentWord);
-    }, [wordList])
+    // useEffect(() => {
+    //     console.log(wordList);
+    // }, [wordList])
 
     const fetchAudioData = query => {
         fetch("/api/waveify")
@@ -25,8 +24,7 @@ const SearchBar = () => {
                 stream.blob()
                     .then(blob => {
                         const word = new Word(query, blob);
-                        memoWord(word);
-                        pushWord([...wordList, word]); // Cache
+                        updateWordList([...wordList, word]); // Cache in global state
                     });
             })
     }
@@ -37,8 +35,7 @@ const SearchBar = () => {
         const query = document.getElementById("search-input").value;
         fetch(`/api/search?word=${query}`)
             .then(resp => {
-                if (resp.ok) {
-                    // Server returned 200 -> get audio
+                if (resp.ok) { // Server returned 200 -> get audio
                     fetchAudioData(query);
                 }
             })
@@ -55,8 +52,5 @@ const SearchBar = () => {
         </Fragment>
     );
 }
-
-
-
 
 export default SearchBar;

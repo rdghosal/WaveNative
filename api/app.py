@@ -25,7 +25,7 @@ def errorhandler(e):
 
 def create_app():
     """Configures and returns app instance"""
-    app = Flask(__name__, static_folder="../front/dist", template_folder="../front/templates")
+    app = Flask(__name__, static_folder="../client/dist", template_folder="../client/templates")
 
     # Register blueprint
     app.register_blueprint(static_controller.blueprint)
