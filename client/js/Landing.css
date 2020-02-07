@@ -18,16 +18,17 @@
 
 .landing__banner {
     width: 100%;
-    /* position: absolute; */
+    position: absolute;
     /* margin-top: 5%; */
-    z-index: 1;
-    position: fixed;
+    top: 0;
+    /* z-index: 1; */
+    position: relative;
     background-color: rgba(37, 82, 149, 0.8);
     color: white;
     font-size: 100px;
     padding: 0.5rem;
     padding-left: 5rem;
-    height: 12rem;
+    /* height: 12rem; */
     letter-spacing: 0.1rem;
 }
 
@@ -36,7 +37,7 @@
     background-color: whitesmoke;
     box-shadow: 2px 2px 2px #333;
     margin-left: 45%;
-    margin-top: calc(12rem + 10rem);
+    margin-top: 10rem;
     padding: 2rem;
     display: flex;
     justify-content: center;
@@ -52,7 +53,7 @@
 
 @media only screen and (max-width: 1200px) {
     .landing {
-        display: flex;
+        /* display: flex; */
         justify-content: center;
         align-items: center;
         flex-direction: column;
@@ -60,6 +61,12 @@
 
     .landing__contents {
         margin: 0 auto;
+        color: black;
+        padding: 1rem;
+    }
+
+    .landing__contents button {
+        width: 80%;
     }
 
     .landing__banner {
@@ -68,6 +75,7 @@
 }
 
 @media only screen and (max-width: 980px) {
+
     .landing__banner span {
         font-size: 80px;
     }

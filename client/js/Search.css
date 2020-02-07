@@ -8,6 +8,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .search-bar button, .search-bar input {
@@ -38,10 +39,27 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0rem 10rem;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .wave {
+    margin-bottom: 2rem;
+}
+
+.wave__wave {
     background-color: white;
     z-index: 1;
+    padding: 2rem;
+}
+
+.wave__media-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 980px) {
+    .wave-container {
+        width: 95%;
+    }
 }

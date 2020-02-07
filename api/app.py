@@ -1,8 +1,8 @@
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import scoped_session, sessionmaker
-import models
 import user_controller, search_controller, static_controller
 from flask import Flask, session, redirect
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from flask_login import LoginManager
 from tempfile import mkdtemp
@@ -11,8 +11,9 @@ from helpers import login_required, apology
 
 
 # Config variables
-login_manager = LoginManager()
+db = SQLAlchemy()
 sess = Session()
+login_manager = LoginManager()
 
 
 # TODO: Edit error handler
@@ -51,7 +52,7 @@ def create_app():
     # SQLAlchemy ORM config
     app.config["SQLALCHEMY_DATABASE_URI"] = ''
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    models.db.init_app(app)
+    db.init_app(app)
 
     # Configure response headers
     @app.after_request

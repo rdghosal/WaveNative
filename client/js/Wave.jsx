@@ -41,31 +41,33 @@ const Wave = ({ type, word }) => {
             wavesurfer.loadBlob(blob);
             setTimeout(() => setPlayed(true), 350); // Delay render of buttons
         }
-    }, [wavesurfer]);
+    }, [word, wavesurfer]); // Run any time word or wavesurfer changes
 
     return (
         <Fragment>
-            <div className="wave" id={type.toLowerCase()}></div>
-            <div className="wave__media-buttons">
-                {  
-                    type !== WaveTypes.microphone && hasPlayed 
-                        &&  <>
-                                <button className="btn btn-outline" onClick={ () => wavesurfer.play() } >Play</button> 
-                                <button className="btn btn-outline" onClick={ () => wavesurfer.stop() }>Stop</button>
-                                <button className="btn btn-outline" onClick={ () => toggleMic(true) }>Record
-                                    { type === WaveTypes.playback ? " Again?" : "" }</button>
-                            </>
-                }
-                {
-                    type === WaveTypes.microphone && micOn
-                        &&  (
-                                <button className="btn btn-outline" onClick={ () => { 
-                                    wavesurfer.microphone.stop(); 
-                                    wavesurfer.destroy();
-                                    toggleMic(false);
-                                }}>Stop</button>
-                            )
-                }
+            <div className="wave">
+                <div className="wave__wave" id={type.toLowerCase()}></div>
+                <div className="wave__media-buttons">
+                    {  
+                        type !== WaveTypes.microphone && hasPlayed 
+                            &&  <>
+                                    <button className="btn btn-primary" onClick={ () => wavesurfer.play() } >Play</button> 
+                                    <button className="btn btn-danger" onClick={ () => wavesurfer.stop() }>Stop</button>
+                                    <button className="btn" onClick={ () => toggleMic(true) }>Record
+                                        { type === WaveTypes.playback ? " Again?" : "" }</button>
+                                </>
+                    }
+                    {
+                        type === WaveTypes.microphone && micOn
+                            &&  (
+                                    <button className="btn btn-danger" onClick={ () => { 
+                                        wavesurfer.microphone.stop(); 
+                                        wavesurfer.destroy();
+                                        toggleMic(false);
+                                    }}>Stop</button>
+                                )
+                    }
+                </div>
             </div>
         </Fragment>
     );

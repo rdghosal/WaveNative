@@ -35,7 +35,7 @@ export const Search = () => {
                                 && <Wave word={ wordList[wordList.length-1] } type={ WaveTypes.microphone }/> 
                         }
                         {
-                            wordList.length > 0 && wordList[wordList.length-1].userData 
+                            wordList.length > 0 && wordList[wordList.length-1].userData && !micOn
                                 && <Wave type={ WaveTypes.playback } word={ wordList[wordList.length - 1] } />
                         }
                     </div>
