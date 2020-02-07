@@ -1,0 +1,99 @@
+.query {
+    grid-area: searchbar;
+    margin: 1.5rem 0;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.query-input {
+    height: 3rem;
+    width: 50%;
+    right: 0;
+    font-family: Georgia;
+    font-weight: 300;
+    color: #333;
+    font-size: 20px;
+    border: 2px solid rgba(187, 216, 250, 1.0);
+    border-radius: 15px 0 0 0;
+    box-shadow: inset 0 1.5px 3px -2px #333;
+    padding-left: 1.5rem;
+}
+
+.query-input:focus {
+    outline: none;
+    animation-name: borderGlide;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.query-button {
+    width: 12.5rem;
+    height: 3rem;
+    left: 0;
+    border: none;
+    background-color: rgba(0, 179, 160, 0.85);
+    border: solid 1.5px rgba(0, 179, 160, 1.0);
+    text-shadow: 2px 2px rgba(0, 179, 143, 1.0);
+    color: white;
+    font-family: Calibri;
+    font-size: 1.25rem;
+    position: relative;
+    border-radius: 0 0 20px 0;
+}
+
+.query-button span {
+    transition: 0.5s ease-in-out;
+}
+
+.query-button:hover, .query-button:active span {
+    padding-right: 1.75rem;
+    outline: none;
+}
+
+.query-button span::after {
+    content: "🌊";
+    position: absolute;
+    right: 0.95rem;
+    bottom: 0.80rem;
+    transition: transform 0.3s ease-out;
+    transform: scale(0) rotateZ(-180deg);
+}
+
+.query-button:hover span::after {
+    transform: scale(1) rotateZ(0deg);
+}
+
+@keyframes borderGlide {
+    0% {
+        border-top: 2px solid rgba(187, 216, 250, 1.0);
+        border-right: 2px solid rgba(187, 216, 250, 1.0);
+        border-bottom: 2px solid rgba(187, 216, 250, 1.0);
+        border-left: 2px solid rgba(187, 216, 250, 1.0);
+    }
+
+    33% {
+        border-top: 2px solid rgba(187, 216, 250, 1.0);
+        border-right: 2px solid rgba(153, 230, 255, 0.40);
+        border-bottom: 2px solid rgba(187, 216, 250, 1.0); 
+        border-left: 2px solid rgba(187, 216, 250, 1.0);
+    }
+
+    66% {
+        border-top: 2px solid rgba(187, 216, 250, 1.0);
+        border-right: 2px solid rgba(187, 216, 250, 1.0);
+        border-bottom: 2px solid rgba(153, 230, 255, 0.40); 
+        border-left: 2px solid rgba(187, 216, 250, 1.0);
+    }
+
+    100% {
+        border-top: 2px solid rgba(0, 134, 179, 0.50);
+        border-right: 2px solid rgba(187, 216, 250, 1.0);
+        border-bottom: 2px solid rgba(187, 216, 250, 1.0);
+        border-left: 2px solid rgba(0, 134, 179, 0.50);
+        box-shadow: inset 0 3.0px 3px -2px rgba(0, 134, 179, 0.50);
+    }
+}

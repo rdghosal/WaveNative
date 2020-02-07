@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}
+  Search
+{% endblock %}
+
+{% block main %}
+<form action="/search" method="post"> 
+    <div class="form-group">
+        <label>Search for a word: </label>
+        <input type="text" class="form-control" placeholder="native" name="word">
+    </div>
+    <button class="btn btn-primary" type="submit">Get Pronunciation</button>
+</form>
+{% endblock %}
+

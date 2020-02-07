@@ -1,0 +1,69 @@
+.content--history--split {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 1fr;
+    grid-template-rows: minmax(80px, 100px) 1fr;
+    grid-template-areas:  "nav nav nav nav"
+                           ". waves list .";
+}
+
+.content--history--full {
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr 1fr;
+    grid-template-rows: minmax(80px, 100px) 1fr;
+    grid-template-areas: "nav nav nav nav"
+                         ". waves waves .";
+}
+
+.history__wave-container {
+    grid-area: waves;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wave-container__subcontainer {
+    display: flex;
+    position: relative;
+    background-color: rgba(var(--pb-wave-clr), 1.0);
+    border-radius: 5px;
+}
+
+.subcontainer--mobile {
+    flex-direction: column;
+}
+
+.subcontainer__wave {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    z-index: 200;
+}
+
+/* need mobile view too  */
+.subcontainer__button-drawer {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    animation: revealDrawer 500ms ease-in;
+    animation-fill-mode: forwards;
+    height: 100%;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.button-drawer__button {
+    width: 100%;
+    height: 33%;
+}
+
+@keyframes revealDrawer {
+    0% {
+        margin-left: -5rem;
+    }
+
+    100% {
+        margin-left: 0rem;
+    }
+}
