@@ -1,85 +1,62 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AppContext } from "./App";
+import React, { useContext, Fragment, useEffect } from "react";
+import { SearchContext } from "./Search";
 import { GlobalContext } from "./GlobalContext";
-import axios from "axios";
-import "../css/SearchBar.css"
-const ES6Promise = require('es6-promise-promise');
-ES6Promise.polyfill();
 
-
-const SearchBar = ({ queryViaURL }) => {
-    const { word, setWord, toggleInput, toggleMic, setPlaybackData } = useContext(AppContext);
-    const { searchHistory } = useContext(GlobalContext);
-    const [ query, setQuery ] = useState("");
-
-    window.onbeforeunload = () => {
-        if (searchHistory) {
-            window.alert("Note: Refreshing will clear all the waves we saved for you in the History tab.");
-        }
+class Word {
+    // Encapsulates word string and audio data
+    constructor(word, data) {
+        this.word = word;
+        this.audioData = data;
     }
-    
-    const verifyWord = (q) => {
-        document.getElementById("query-input").blur();
+}
 
-        axios
-            .get("/api/search", { params: { word: q } })
-            .then((response) => {
-                    console.log(response);
-                    setWord(q);
-                    console.log(word);
-                    toggleInput(false);
-            })
-            .catch((error) => console.log(error));
-    }
-
-    const destroyWaveContainer = () => {
-        const waveContainer = document.querySelector(".wave-container");
-        if (!waveContainer.classList.contains("wave-container--destroy")) {
-            waveContainer.classList.add("destroyed");
-        }
-    }
-
-    const handleChange = (textInput) => {
-        let delay = 0;
-        setQuery(textInput);
-
-        if (document.querySelector("wave") !== null) { 
-           destroyWaveContainer();
-           delay = 500;
-        }
-
-        setTimeout(() => {
-            toggleInput(true);
-            setPlaybackData(null);
-            toggleMic(false);
-            return;
-        }, delay);
-    }
-    
-    const throwQuery = (e) => {
-        if (query === "") {
-            e.preventDefault();
-            window.alert("Must input query!");
-            return;
-        }
-
-        e.preventDefault();
-
-        verifyWord(query);
-    }
+const SearchBar = () => {
+    const { wordList, pushWord } = useContext(GlobalContext);
+    const { currentWord, memoWord } = useContext(SearchContext);
 
     useEffect(() => {
-        if (queryViaURL !== null) {
-           verifyWord(queryViaURL);
-        }
-    }, []);
-    
+        console.log(wordList);
+        console.log(currentWord);
+    }, [wordList])
+
+    const fetchAudioData = query => {
+        fetch("/api/waveify")
+            .then(stream => {
+                stream.blob()
+                    .then(blob => {
+                        const word = new Word(query, blob);
+                        memoWord(word);
+                        pushWord([...wordList, word]); // Cache
+                    });
+            })
+    }
+
+    const verifyWord = () => {
+        // Check if user input is a valid word
+        // TODO: Add error handler
+        const query = document.getElementById("search-input").value;
+        fetch(`/api/search?word=${query}`)
+            .then(resp => {
+                if (resp.ok) {
+                    // Server returned 200 -> get audio
+                    fetchAudioData(query);
+                }
+            })
+    }
+
     return (
-        <form className="query">
-            <input className="query-input" id="query-input" autoFocus="on" autoComplete="on" type="text" value={query} onChange={ e => handleChange(e.target.value) } placeholder="Search for a word!"/>
-            <button className="query-button" onClick={ throwQuery }><span>Get Waveform!</span></button>  
-        </form>
+        <Fragment>
+            <div className="search-bar">
+                <input type="text" id="search-input" autoFocus={true} onKeyDown={e => {
+                    if(e.keyCode === 13) verifyWord();
+                }}/>
+                <button className="btn btn-primary" onClick={ verifyWord }>Search</button>
+            </div>
+        </Fragment>
     );
 }
+
+
+
 
 export default SearchBar;

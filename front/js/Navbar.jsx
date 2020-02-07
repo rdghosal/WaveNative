@@ -1,29 +1,25 @@
-import React, { useState, Fragment } from "react";
-import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
-import NavToggler from "./NavToggler";
-import "../css/Navbar.css";
-import Sidemenu from "./Sidemenu";
-
+import React, { useContext, Fragment } from "react";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "./GlobalContext";
+import "./Navbar.css";
 
 const Navbar = () => {
-    // const [ isSidemenuOpen, toggleSidemenu ] = useState(false);
+    const { userId } = useContext(GlobalContext);
 
     return (
         <Fragment>
-            <nav>
-                {/* <NavToggler onClick={ toggleSidemenu(true) }/> */}
-                <div className="logo-caption">
-                    <Link to="/" className="react-link logo"><span>W</span>ave <span>N</span>ative</Link>
-                    <p className="caption">One small wave, one giant leap</p>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div className="navbar-brand"><Link to="/"><span>W</span>ave<span>N</span>ative</Link></div>
+                <div className="navbar-text">One small wave, one giant leap</div>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbar">
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item"><Link to="/" className="react-link nav-link">Home</Link></li>
+                    </ul>
                 </div>
-                <div className="space"></div>
-                <ul className="nav-links">
-                    <li><Link to="/" className="react-link">Home</Link></li>
-                    <li><Link to="/app/" className="react-link">Catch a Wave</Link></li>
-                    <li><Link to="/history/" className="react-link">History</Link></li>
-                </ul>
             </nav>
-            {/* { isSidemenuOpen ? <Sidemenu /> : null } */}
         </Fragment>
     );
 }
