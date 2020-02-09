@@ -21,7 +21,7 @@ def register():
 
 
 # User login
-@blueprint.route("/login", methods=["POST"])
+@blueprint.route("/api/login", methods=["POST"])
 def login():
     """Log user in"""
     # Forget any user_id
@@ -39,7 +39,7 @@ def login():
 
 
 # Destory user session upon logout
-@blueprint.route("/logout")
+@blueprint.route("/api/logout")
 def logout():
     # Forget any user_id
     session.clear()
