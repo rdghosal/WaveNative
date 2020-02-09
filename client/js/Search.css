@@ -1,0 +1,49 @@
+.search-bar {
+    margin-bottom: 2rem;
+}
+
+ .search-bar button, .search-bar input {
+    height: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.search-bar input {
+    border: none;
+    border-left: 1px solid rgb(201, 200, 200);
+    border-bottom: 2px solid rgb(199, 199, 199);
+    border-radius: 0.25rem;
+    outline: none;
+    padding-left: 1rem;
+}
+
+.search-bar button {
+    border-radius: 0 0.25rem 0.25rem 0; 
+}
+
+.search-bar:focus {
+    outline: none;
+}
+
+.wave {
+    margin-bottom: 2rem;
+}
+
+.wave__wave {
+    padding: 2rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+
+wave {
+    width: 100%;
+}
+
+.wave__media-buttons button{
+    margin: 0 1rem;
+}
+
+@media screen and (max-width: 980px) {
+    .wave__media-buttons button {
+        margin: 0;
+    }
+}

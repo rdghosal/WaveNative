@@ -6,7 +6,7 @@ blueprint = Blueprint("static_controller", __name__)
 @blueprint.route("/img/<path:filename>")
 def serve_img(filename):
     """Return image files"""
-    return send_from_directory(os.path.join(os.pardir, "front", "img"), filename)
+    return send_from_directory(os.path.join(os.pardir, "client", "img"), filename)
 
 
 @blueprint.route("/", defaults={"path": "/"})

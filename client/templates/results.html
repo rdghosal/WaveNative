@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+{% block title %}
+    Results
+{% endblock %}
+
+{% block main %}
+    <p>{{ word }}</p>
+    <p>{{ mw_pronun }}</p>
+    <audio controls id="word">
+        <source src="{{ audio_url }}" type="audio/wav">
+        
+    </audio><br>
+
+    <button class="btn btn-primary" id="wavePlay">get waveform</button><br>
+    <button class="btn btn-primary" id="micStart">start mic</button><br>
+    <button class="btn btn-primary" id="micStop">stop mic</button><br>
+
+    <div class="container-fluid" id="">
+        <div class="row">
+            <div class="col" style="position: relative;" id="wave-container">
+                <img id="image" style="color:red; position: absolute;"/>
+                <img id="recording" style="color:blue; position: absolute;"/>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" id=""></div>    
+        </div>
+    </div>
+    
+    <script>
+        //should limit record count
+        let record_count = 0;
+        let duration = 0;
+
+        //cannot read load property of undefined... second click    
+        function makeWave(id, color="red", cursorWidth=0.5, plugins=[]) {
+
+            if (!id) {
+                console.log("Must provide container id!")
+            }
+
+            if (document.getElementById(id) == null) {
+                console.log("doesn't exist")
+                let container = document.createElement("div");
+                container.setAttribute("id", id);
+                document.getElementById("wave-container").appendChild(container).setAttribute("position", "absolute");
+
+                let wavesurfer = WaveSurfer.create({
+                    container: `#${id}`,
+                    scrollParent: true,
+                    responsive: true,
+                    mediaControls: true,
+                    cursorWidth: cursorWidth,
+                    progressColor: color,
+                    plugins: plugins
+                });
+
+                return wavesurfer;
+
+            } else {
+                console.log("already exists")
+                return;
+            }
+        }
+
+        function removeContainer(id) {
+            if (document.getElementById(id)) {
+                let container = document.getElementById(id);
+                container.parentNode.removeChild(container);
+            }
+
+            return;
+        } 
+
+        const wavePlay = document.getElementById("wavePlay");
+        const micRecButton = document.getElementById("micStart");
+        const micStopButton = document.getElementById("micStop");
+
+        //micRecButton.style.visibility = "hidden";
+        //micStopButton.style.visibility = "hidden";
+        
+        wavePlay.onclick = function() {
+            //makeContainer("waveform");
+            
+            wavePlay.setAttribute("disabled", "");
+
+            var wavesurfer = makeWave("waveform");
+
+            wavesurfer.load("{{url_for('get_waveform')}}");
+            // search -> ready -> user control of play etc.
+            wavesurfer.on("ready", () => { 
+                //wavesurfer.setPlaybackRate(0.5);
+                duration = wavesurfer.getDuration(); 
+                console.log(wavesurfer.container.id);
+
+                wavesurfer.play();
+
+                
+            });
+
+            wavesurfer.on("finish", () => { 
+                wavesurfer.stop();
+                let waveURI = wavesurfer.exportImage();
+                //console.log(waveURI);
+                let waveImage = document.getElementById("image");
+                waveImage.src = waveURI;
+                wavePlay.removeAttribute("disabled");
+            
+                console.log(duration);
+                //micRecButton.style.visibility = "visible";
+                //micStopButton.style.visibility = "visible";
+             });
+        }
+
+        micRecButton.onclick = function() {
+            let chunks = [];
+            record_count++;
+
+            let micSurfer = makeWave("mic", "black", 0, [ WaveSurfer.microphone.create()]);
+            
+            micSurfer.microphone.on('deviceReady', stream => {
+                console.log('Device ready!', stream);
+
+                const mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+
+                mediaRecorder.ondataavailable = event => {
+                    chunks.push(event.data);
+                }
+
+                mediaRecorder.onstop = function() {
+                    //maybe keep container instead?
+                    removeContainer("mic");
+
+                    let playbackBlob = new Blob(chunks);
+                    console.log(playbackBlob);
+    
+                    var playbackWave = makeWave(`playback_${record_count}`, "blue");
+
+                    //const playbackURL = URL.createObjectURL(playbackBlob);
+                    playbackWave.loadBlob(playbackBlob);
+
+                    playbackWave.on("ready", () => playbackWave.play());
+
+                    playbackWave.on("finish", () => { 
+                        playbackWave.stop();
+                        let playbackURL = playbackWave.exportImage();
+                        document.getElementById("recording").src = playbackURL;
+                    });
+                }
+                
+                // Let user figure it out?
+                /*setTimeout(() => {
+                    micSurfer.stop();
+                    mediaRecorder.stop();
+                }, duration * 10000);*/
+
+                micStopButton.onclick = function() {
+                    micSurfer.microphone.stop();
+                    mediaRecorder.stop();
+                }
+            });
+
+            micSurfer.microphone.on('deviceError', code => {
+                console.warn('Device error: ' + code);
+            });
+
+            micSurfer.microphone.start();
+            micSurfer.microphone.play();
+        }
+        
+        
+    </script>
+
+{% endblock %}
+

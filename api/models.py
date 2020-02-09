@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from app import db
 
-# Exported instance
-db = SQLAlchemy()
 
 class Users(db.Model):
     """Table for user info"""
