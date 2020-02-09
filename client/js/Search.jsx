@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import WaveTypes from "./WaveTypes";
 import "./Search.css"
 import { GlobalContext } from "./GlobalContext";
+import LoginModal from "./LoginModal";
 import Wave from "./Wave";
 
 // To pass on state to child components
@@ -19,6 +20,7 @@ export const Search = () => {
     return (
         <Fragment>
             <SearchContext.Provider value={{ hasPlayed, setPlayed, micOn, toggleMic }}>
+                <LoginModal />
                 <Navbar />
                 <div className="search container-fluid">
                     <SearchBar />

@@ -1,38 +1,77 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Fragment } from "react";
 import { GlobalContext } from "./GlobalContext";
 import { userTypes, User } from "./User";
 
-export default function LoginModal() {
+const LoginModal = () => {
     const { currentUser, setUser } = useContext(GlobalContext);
     const [ isNewUser, toggleUserStatus ] = useState(false); // Switch b/w login and registration
 
     // Conditional rendering depending on user login status
     if (!currentUser) {
         return (
-            <div className="login-modal">
-                {   !isNewUser 
-                        &&  <form method="POST" action="/api/login" id="login">
-                                <input type="text" className="" placeholder="Username"/>
-                                <input type="password" className="" name="password" placeholder="Password"/>
-                                <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Log In"/>
-                                <button className="btn btn-success" onClick={ () => toggleUserStatus(true) }>Sign Up</button>
-                                <button className="btn btn-red" onClick={ () => setUser(new User(undefined, userTypes.GUEST)) }>
-                                    Continue as guest</button>
-                            </form>
-                } 
-                {
-                    isNewUser 
-                        &&  <form method="POST" action="/api/register" id="registration">
-                                <input type="text" className="" name="username" placeholder="Username"/>
-                                <input type="password" className="" name="password" placeholder="Password"/>
-                                <label htmlFor=""></label>
-                                <input type="text" className="" name="age" placeholder="Age"/>
-                                <input type="text" className="" name="country" placeholder="Country"/>
-                                <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Submit"/>
-                                <button className="btn btn-secondary" onClick={ () => toggleUserStatus(false) }>Back</button>
-                            </form>
-                }
-            </div>
+            <Fragment>
+                {console.log(currentUser)}
+                <div className="login-modal container">
+                    <div className="row justify-content-center">
+                        <h5 className="modal-title" id="loginModalTitle">{!isNewUser ? "Login" : "Register"}</h5>
+                    </div>
+                    <div className="login-modal__form container">
+                        {   !isNewUser 
+                                &&  <form method="POST" action="/api/login" id="login">
+                                        <div className="login-modal__input container">
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="text" className="" placeholder="Username"/>
+                                            </div>
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="password" className="" name="password" placeholder="Password"/>
+                                            </div>
+                                        </div>
+                                        <div className="login-modal__buttons container">
+                                            <div className="row justify-content-center">
+                                                <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Log In"/>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <button className="btn btn-success" onClick={ () => toggleUserStatus(true) }>Sign Up</button>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <button className="btn btn-red" onClick={ () => setUser(new User(undefined, userTypes.GUEST)) }>
+                                                    Continue as guest
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                        } 
+                        {
+                            isNewUser 
+                                &&  <form method="POST" action="/api/register" id="registration">
+                                        <div className="login-modal__input container">
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="text" className="" name="username" placeholder="Username"/>
+                                            </div>
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="password" className="" name="password" placeholder="Password"/>
+                                            </div>
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="text" className="" name="age" placeholder="Age"/>
+                                            </div>
+                                            <div className="row justify-content-center login-modal__input--text">
+                                                <input type="text" className="" name="country" placeholder="Country"/>
+                                            </div>
+                                        </div>
+                                        <div className="login-modal__buttons container">
+                                            <div className="row justify-content-center">
+                                                <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Submit"/>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <button className="btn btn-secondary" onClick={ () => toggleUserStatus(false) }>Back</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                        }
+                    </div>
+                </div>
+                <div className="backdrop"></div>
+            </Fragment>
         );
     }
 
