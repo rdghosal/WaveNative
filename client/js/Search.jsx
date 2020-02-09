@@ -20,9 +20,9 @@ export const Search = () => {
         <Fragment>
             <SearchContext.Provider value={{ hasPlayed, setPlayed, micOn, toggleMic }}>
                 <Navbar />
-                <div className="search">
+                <div className="search container-fluid">
                     <SearchBar />
-                    <div className="wave-container">
+                    <div className="container-fluid">
                         {
                             console.log(wordList)
                         }

@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useEffect } from "react";
+import React, { useContext, Fragment, useEffect, useState } from "react";
 import { SearchContext } from "./Search";
 import { GlobalContext } from "./GlobalContext";
 
@@ -12,6 +12,7 @@ class Word {
 
 const SearchBar = () => {
     const { wordList, updateWordList } = useContext(GlobalContext);
+    const [ errorOccurred, toggleError ] = useState(false);
     // const { currentWord, memoWord } = useContext(SearchContext);
 
     // useEffect(() => {
@@ -33,21 +34,35 @@ const SearchBar = () => {
         // Check if user input is a valid word
         // TODO: Add error handler
         const query = document.getElementById("search-input").value;
+        if (!query) { // Avoid empty string
+            return;
+        }
         fetch(`/api/search?word=${query}`)
             .then(resp => {
                 if (resp.ok) { // Server returned 200 -> get audio
+                    if (errorOccurred) toggleError(false); 
                     fetchAudioData(query);
-                }
+                } else toggleError(true);
             })
     }
 
     return (
         <Fragment>
-            <div className="search-bar">
-                <input type="text" id="search-input" autoFocus={true} onKeyDown={e => {
-                    if(e.keyCode === 13) verifyWord();
-                }}/>
-                <button className="btn btn-primary" onClick={ verifyWord }>Search</button>
+            <div className="search-bar container">
+                <div className="row justify-content-center">
+                    <input type="text" id="search-input" className="col-5" autoFocus={true} onKeyDown={e => {
+                        if(e.keyCode === 13) verifyWord();
+                    }}/>
+                    <button className="btn btn-primary col-3" onClick={ verifyWord }>Search</button>
+                </div>
+                { 
+                    errorOccurred && 
+                        <div className="row justify-content-center"> 
+                            <div className="col-8 alert alert-danger text-center" role="alert">
+                                Sorry! We couldn't find a wave for that word...
+                            </div>
+                        </div> 
+                }
             </div>
         </Fragment>
     );

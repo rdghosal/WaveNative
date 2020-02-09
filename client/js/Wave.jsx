@@ -45,22 +45,27 @@ const Wave = ({ type, word }) => {
 
     return (
         <Fragment>
-            <div className="wave">
-                <div className="wave__wave" id={type.toLowerCase()}></div>
-                <div className="wave__media-buttons">
+            <div className="wave container">
+                <div className="row justify-content-center">
+                    <div className="wave__wave col" id={type.toLowerCase()}></div>
+                </div>
+                <div className="wave__media-buttons row justify-content-center">
                     {  
                         type !== WaveTypes.microphone && hasPlayed 
                             &&  <>
-                                    <button className="btn btn-primary" onClick={ () => wavesurfer.play() } >Play</button> 
-                                    <button className="btn btn-danger" onClick={ () => wavesurfer.stop() }>Stop</button>
-                                    <button className="btn" onClick={ () => toggleMic(true) }>Record
-                                        { type === WaveTypes.playback ? " Again?" : "" }</button>
+                                    <button className="btn btn-success col-3" onClick={ () => wavesurfer.play() } >Play</button> 
+                                    <button className="btn btn-danger col-3" onClick={ () => wavesurfer.stop() }>Stop</button>
                                 </>
+                    }
+                    {
+                        type === WaveTypes.native && hasPlayed
+                            &&      <button className="btn btn-warning col-3" onClick={ () => toggleMic(true) }>
+                                        Record</button>
                     }
                     {
                         type === WaveTypes.microphone && micOn
                             &&  (
-                                    <button className="btn btn-danger" onClick={ () => { 
+                                    <button className="btn btn-danger col-5" onClick={ () => { 
                                         wavesurfer.microphone.stop(); 
                                         wavesurfer.destroy();
                                         toggleMic(false);
@@ -125,7 +130,7 @@ function initWaveSurfer(type, params, stateUpdater) {
     // Common behavior for native and playback waves
     if (type !== WaveTypes.microphone) {
         wavesurfer.on("ready", () => { 
-            setTimeout(() => wavesurfer.play(), 250);
+            setTimeout(() => wavesurfer.play(), 350);
         });
         wavesurfer.on("finish", () => { 
             wavesurfer.stop();
