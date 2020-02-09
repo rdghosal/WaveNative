@@ -12,6 +12,9 @@ html, body {
     height: 100%;
 }
 
+.content {
+    position: relative;
+}
 
 button:hover, a:hover {
     cursor: pointer;
