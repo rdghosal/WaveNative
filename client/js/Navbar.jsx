@@ -4,7 +4,7 @@ import { GlobalContext } from "./GlobalContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-    const { userId } = useContext(GlobalContext);
+    const { currentUser } = useContext(GlobalContext);
 
     return (
         <Fragment>
