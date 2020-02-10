@@ -4,7 +4,6 @@ import React, { useState } from "react"
 export const GlobalContext = React.createContext();
 
 export const GlobalProvider = (props) => {
-    // Caches userId to communicate w/ back-end
     const [ currentUser, setUser ] = useState(null);
     const [ wordList, updateWordList ] = useState([]);
 

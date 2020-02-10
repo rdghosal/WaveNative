@@ -12,7 +12,7 @@ export const SearchContext = React.createContext();
 
 export const Search = () => {
     // Memoize queries
-    const { wordList } = useContext(GlobalContext);
+    const { currentUser, wordList } = useContext(GlobalContext);
     // const [ currentWord, memoWord ] = useState(null);
     const [ hasPlayed, setPlayed ] = useState(false);
     const [ micOn, toggleMic ] = useState(false); // TODO
@@ -26,7 +26,7 @@ export const Search = () => {
                     <SearchBar />
                     <div className="container-fluid">
                         {
-                            console.log(wordList)
+                            console.log(currentUser)
                         }
                         {
                             wordList.length > 0

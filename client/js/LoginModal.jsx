@@ -10,7 +10,6 @@ const LoginModal = () => {
     if (!currentUser) {
         return (
             <Fragment>
-                {console.log(currentUser)}
                 <div className="login-modal container">
                     <div className="row justify-content-center">
                         <h5 className="modal-title" id="loginModalTitle">{!isNewUser ? "Login" : "Register"}</h5>
