@@ -13,7 +13,7 @@ from helpers import login_required, apology
 # Config variables
 db = SQLAlchemy()
 sess = Session()
-login_manager = LoginManager()
+# login_manager = LoginManager()
 
 
 # TODO: Edit error handler
@@ -47,7 +47,7 @@ def create_app():
     sess.init_app(app)
 
     # Login configuration
-    login_manager.init_app(app)
+    # login_manager.init_app(app)
 
     # SQLAlchemy ORM config
     app.config["SQLALCHEMY_DATABASE_URI"] = ''

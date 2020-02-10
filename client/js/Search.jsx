@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import Navbar from "./Navbar";
 import WaveTypes from "./WaveTypes";
@@ -6,11 +6,12 @@ import "./Search.css"
 import { GlobalContext } from "./GlobalContext";
 import LoginModal from "./LoginModal";
 import Wave from "./Wave";
+import queryString from "query-string";
 
 // To pass on state to child components
 export const SearchContext = React.createContext();
 
-export const Search = () => {
+export const Search = (props) => {
     // Memoize queries
     const { currentUser, wordList } = useContext(GlobalContext);
     // const [ currentWord, memoWord ] = useState(null);
@@ -23,7 +24,7 @@ export const Search = () => {
                 <LoginModal />
                 <Navbar />
                 <div className="search container-fluid">
-                    <SearchBar />
+                    <SearchBar query={queryString.parse(props.location.search)} />
                     <div className="container-fluid">
                         {
                             console.log(currentUser)

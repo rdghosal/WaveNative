@@ -14,7 +14,7 @@ def search():
     and caches URL file thereof if valid"""
     api_key = os.getenv("API_KEY")
     session["current_word"] = request.args.get("word")
-    session[session["current_word"]] = None
+    # session[session["current_word"]] = None
 
     # Ping Merriam Webster for word details
     response = requests.get(f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{session['current_word']}?key={api_key}")
