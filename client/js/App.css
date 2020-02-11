@@ -23,3 +23,46 @@ button:hover, a:hover {
 a:hover {
     text-decoration: none;
 }
+
+.backdrop {
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    opacity: 0.75;
+}
+
+.login-modal {
+    position: absolute;
+    z-index: 200;
+    background-color: white;
+    width: 20rem;
+    padding: 1rem 2rem;
+    margin: 2rem 40%;
+    border-radius: 1.25rem;
+}
+
+.login-modal__form form > input {
+    margin-bottom: 0.25rem;
+    width: 100%;
+}
+
+.login-modal__buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.login-modal__buttons input, .login-modal__buttons button {
+    width: 10rem;
+    margin-bottom: 0.25rem;
+}
+
+.login-modal__input {
+    margin-bottom: 0.25rem;
+}

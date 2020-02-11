@@ -10,7 +10,7 @@ class Word {
     }
 }
 
-const SearchBar = () => {
+const SearchBar = (props) => {
     const { wordList, updateWordList } = useContext(GlobalContext);
     const [ errorOccurred, toggleError ] = useState(false);
     // const { currentWord, memoWord } = useContext(SearchContext);
@@ -45,6 +45,17 @@ const SearchBar = () => {
                 } else toggleError(true);
             })
     }
+
+    useEffect(() => {
+        // Execute search if query input in url
+            const query = props.query.word;
+            if (query) {
+                // Render query on input el
+                console.log(query)
+                document.getElementById("search-input").value = query;
+                verifyWord();
+            }
+    }, []);
 
     return (
         <Fragment>

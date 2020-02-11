@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import "./Landing.css"
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
     return (
@@ -17,7 +18,7 @@ const Landing = () => {
                             Pinpoint, improve, and be amazed.
                         </p>
                     </div>
-                    <button className="landing__button btn btn-primary" onClick={() => window.location.href = "/search"}>Set Sail</button>
+                    <Link to="/search"><button className="landing__button btn btn-primary">Set Sail</button></Link>
                 </div>
             </div>
         </Fragment>

@@ -4,12 +4,11 @@ import React, { useState } from "react"
 export const GlobalContext = React.createContext();
 
 export const GlobalProvider = (props) => {
-    // Caches userId to communicate w/ back-end
-    const [ userId, cacheUserId ] = useState(null);
+    const [ currentUser, setUser ] = useState(null);
     const [ wordList, updateWordList ] = useState([]);
 
     return (
-        <GlobalContext.Provider value={{ userId, cacheUserId, wordList, updateWordList }}>
+        <GlobalContext.Provider value={{ currentUser, setUser, wordList, updateWordList }}>
             { props.children }
         </GlobalContext.Provider>
     );    

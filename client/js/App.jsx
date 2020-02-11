@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { GlobalProvider } from "./GlobalContext";
 import Landing from "./Landing";
 import { Search } from "./Search";
+import History from "./History";
 import "./App.css";
 
 const App = () => {
@@ -10,9 +11,9 @@ const App = () => {
     return (
         <Router>
             <Switch>
-                <Route path="/" exact render={() => <GlobalProvider><Landing /></GlobalProvider>} />
-                <Route path="/search/:word?" render={() => <GlobalProvider><Search /></GlobalProvider>} />
-                {/* <Route path="/history/" render={() => <GlobalProvider><History /></GlobalProvider>} />  */}
+                <Route path="/" exact render={() =><GlobalProvider><Landing /></GlobalProvider>} />
+                <Route path="/search/:word?" render={(props) => <GlobalProvider><Search {...props}/></GlobalProvider>} />
+                <Route path="/history" render={() => <GlobalProvider><History /></GlobalProvider>} /> 
             </Switch>
         </Router>
     );

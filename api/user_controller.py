@@ -1,6 +1,6 @@
 import user_service
 import models
-from flask import Blueprint, request, redirect, session, jsonify
+from flask import Blueprint, request, redirect, session, jsonify, make_response
 from flask_login import LoginManager
 from app import db
 
@@ -21,7 +21,7 @@ def register():
 
 
 # User login
-@blueprint.route("/login", methods=["POST"])
+@blueprint.route("/api/login", methods=["POST"])
 def login():
     """Log user in"""
     # Forget any user_id
@@ -38,8 +38,14 @@ def login():
     return jsonify(""), 200
 
 
+@blueprint.route("/api/guest")
+def guest_login():
+    session["user_id"] = 0
+    return make_response(jsonify("Logged in as guest"), 200)
+
+
 # Destory user session upon logout
-@blueprint.route("/logout")
+@blueprint.route("/api/logout")
 def logout():
     # Forget any user_id
     session.clear()
