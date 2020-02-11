@@ -1,4 +1,5 @@
-import os, requests, search_service
+import os, requests
+import wavenative.services as services
 from io import BytesIO
 from flask import Blueprint, request, jsonify, send_file, session
 
@@ -6,7 +7,7 @@ from flask import Blueprint, request, jsonify, send_file, session
 WORD_DETAILS_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/{0}?key={1}"
 
 # To be registered by app.py
-blueprint = Blueprint("search_controller", __name__)
+blueprint = Blueprint(name="query_controller", import_name=__name__)
 
 
 # Get URL for audio file retrieval
@@ -19,9 +20,7 @@ def search():
     # session[session["current_word"]] = None
 
     # Check database for url if query had been previously made
-    audio_url = search_service.get_audio_url(curr_word)
-    print("CURRENTWORD", curr_word)
-    print("API", api_key)
+    audio_url = services.query.get_audio_url(curr_word)
 
     if not audio_url:
         # Get audio url from MW API
@@ -31,11 +30,11 @@ def search():
 
         # Extract url from JSON and cache
         data = response.json()[0]
-        session["current_audio_url"] = search_service.extract_audio_url(data)
+        session["current_audio_url"] = services.query.extract_audio_url(data)
 
         # Add UserQuery to database
         if session["user_id"] > 0:
-            search_service.add_query(session["user_id"], curr_word, session["current_audio_url"])
+            services.query.add_query(session["user_id"], curr_word, session["current_audio_url"])
 
     return jsonify("Valid query"), 200
 
