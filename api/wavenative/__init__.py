@@ -8,7 +8,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from .helpers import login_required, apology
 
 # Set upload path and make upload folder if necessary
-UPLOAD_FOLDER = os.path.join(os.pardir, os.pardir, "user_recordings")
+UPLOAD_FOLDER = os.path.join(os.pardir, "user_recordings")
 if not os.path.exists(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
