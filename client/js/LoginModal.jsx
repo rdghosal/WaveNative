@@ -13,6 +13,7 @@ const LoginModal = () => {
         const formId = form.getAttribute("id")
         const url = form.getAttribute("action");
 
+        // TODO refactor from iteration to simplying grabbing form element
         const fieldNames = ["username", "password", "age", "country"];
         
         let END = (form.getAttribute("id") === "login") ? 2 : fieldNames.length; // Set end of iteration
