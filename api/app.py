@@ -1,6 +1,6 @@
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import scoped_session, sessionmaker
-import user_controller, search_controller, static_controller
+import os
 from flask import Flask, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
@@ -28,7 +28,9 @@ def create_app():
     """Configures and returns app instance"""
     app = Flask(__name__, static_folder="../client/dist", template_folder="../client/templates")
 
-    # Register blueprint
+    import user_controller, search_controller, static_controller
+
+    # Register blueprints
     app.register_blueprint(static_controller.blueprint)
     app.register_blueprint(search_controller.blueprint)
     app.register_blueprint(user_controller.blueprint)
@@ -50,10 +52,10 @@ def create_app():
     # login_manager.init_app(app)
 
     # SQLAlchemy ORM config
-    app.config["SQLALCHEMY_DATABASE_URI"] = ''
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI_DEV")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
-
+    
     # Configure response headers
     @app.after_request
     def after_request(response):
