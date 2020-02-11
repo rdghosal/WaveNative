@@ -2,7 +2,7 @@ from app import db
 from datetime import datetime
 
 
-class Users(db.Model):
+class User(db.Model):
     """Stores user info"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -11,14 +11,14 @@ class Users(db.Model):
     hashed = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     country = db.Column(db.String(255), nullable=False)
-    queries = db.relationship("UserQueries", backref="user", lazy=True)
-    recordings = db.relationship("UserRecordings", backref="user", lazy=True)
+    queries = db.relationship("UserQuery", backref="user", lazy=True)
+    recordings = db.relationship("UserRecording", backref="user", lazy=True)
 
     def __repr__(self):
         return f"User(id={self.id}, username={self.username} ...\n queries={self.queries})"
 
 
-class UserQueries(db.Model):
+class UserQuery(db.Model):
     """Stores queries for each user as well as URL to wav file"""
     __tablename__ = 'user_queries'
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +31,7 @@ class UserQueries(db.Model):
         return f"Query(query={self.query}, url={self.url}, datetime={self.datetime}, user_id={self.user_id})"
     
 
-class UserRecordings(db.Model):
+class UserRecording(db.Model):
     """Stores url to """
     __tablename__ = 'user_recordings'
     id = db.Column(db.Integer, primary_key=True)

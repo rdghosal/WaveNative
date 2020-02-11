@@ -3,6 +3,8 @@ from io import BytesIO
 from flask import Blueprint, request, jsonify, send_file, session
 
 
+WORD_DETAILS_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/{0}?key={1}"
+
 # To be registered by app.py
 blueprint = Blueprint("search_controller", __name__)
 
@@ -13,19 +15,29 @@ def search():
     """Searches Merriam Webster (MW) for word
     and caches URL file thereof if valid"""
     api_key = os.getenv("API_KEY")
-    session["current_word"] = request.args.get("word")
+    session["current_word"] = curr_word = request.args.get("word")
     # session[session["current_word"]] = None
 
-    # Ping Merriam Webster for word details
-    response = requests.get(f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{session['current_word']}?key={api_key}")
-    if response.status_code != 200:
-        return jsonify(""), 400       
+    # Check database for url if query had been previously made
+    audio_url = search_service.get_audio_url(curr_word)
+    print("CURRENTWORD", curr_word)
+    print("API", api_key)
 
-    # Extract url from JSON and cache
-    data = response.json()[0]
-    session["current_audio_url"] = search_service.extract_audio_url(data)
+    if not audio_url:
+        # Get audio url from MW API
+        response = requests.get(WORD_DETAILS_URL.format(session["current_word"], api_key))
+        if response.status_code != 200:
+            return jsonify("Invalid query"), 400       
 
-    return jsonify(""), 200
+        # Extract url from JSON and cache
+        data = response.json()[0]
+        session["current_audio_url"] = search_service.extract_audio_url(data)
+
+        # Add UserQuery to database
+        if session["user_id"] > 0:
+            search_service.add_query(session["user_id"], curr_word, session["current_audio_url"])
+
+    return jsonify("Valid query"), 200
 
 
 @blueprint.route("/api/waveify")

@@ -12,11 +12,11 @@ login_manager = LoginManager()
 @blueprint.route("/api/register", methods=["POST"])
 def register():
     # Verify form data
-    if not user_service.check_form_data(request.form, db, models.Users):
+    if not user_service.check_form_data(request.form, db, models.User):
         return jsonify(""), 400
     
     # Add to database
-    user_service.add_user(request.form, db, models.Users) 
+    user_service.add_user(request.form, db, models.User) 
     return jsonify(""), 201
 
 
@@ -29,7 +29,7 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     # Get user input
-    result = user_service.get_user_id(request.form, db, models.Users)
+    result = user_service.get_user_id(request.form, db, models.User)
     if not result:
         return jsonify(""), 403
 
