@@ -1,7 +1,7 @@
 import os, requests
 import wavenative.services as services
 from io import BytesIO
-from flask import Blueprint, request, jsonify, send_file, session
+from flask import Blueprint, request, jsonify, send_file, session, make_response
 
 
 WORD_DETAILS_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/{0}?key={1}"
@@ -31,10 +31,14 @@ def search():
         # Extract url from JSON and cache
         data = response.json()[0]
         session["current_audio_url"] = services.query.extract_audio_url(data)
+        services.query.add_query(curr_word, session["current_audio_url"])
 
-        # Add UserQuery to database
-        if session["user_id"] > 0:
-            services.query.add_query(session["user_id"], curr_word, session["current_audio_url"])
+    else: 
+        session["current_audio_url"] = audio_url
+
+    # Add UserQuery to database
+    if session["user_id"] > 0:
+        services.query.add_user_query(session["user_id"], curr_word)
 
     return jsonify("Valid query"), 200
 
@@ -50,8 +54,15 @@ def get_wav_data():
     return send_file(BytesIO(data), mimetype='audio/wav')
 
 
-@blueprint.route("/api/history")
-def fetch_history(): 
-    word = request.args.get("word")
-    print(word)
-    return send_file(BytesIO(session.get(word)), mimetype="audio/wav")
+@blueprint.route("/api/queries/<path:user_id>")
+def get_user_queries(user_id): 
+    """Returns all queries made by user"""
+    # Prevent queries using guest user id
+    if not int(user_id) > 0:
+        return make_response(jsonify("Cannot process for guest user"), 403)
+    
+    # Retrieve unique queries for user from database
+    user_queries = services.query.get_user_queries(user_id)
+    if not user_queries:
+        return make_response(jsonify("No queries found for user"), 400)
+    return make_response(jsonify(user_queries), 200)

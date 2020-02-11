@@ -6,9 +6,9 @@ from flask_login import LoginManager
 blueprint = Blueprint(name="user_controller", import_name=__name__)
 login_manager = LoginManager()
 
-# User registration
 @blueprint.route("/api/register", methods=["POST"])
 def register():
+    """User registration"""
     # Verify form data
     if not services.user.check_form_data(request.form):
         return jsonify(""), 400
@@ -18,15 +18,13 @@ def register():
     return jsonify(""), 201
 
 
-# User login
 @blueprint.route("/api/login", methods=["POST"])
 def login():
     """Log user in"""
     # Forget any user_id
     session.clear()
 
-    # User reached route via POST (as by submitting a form via POST)
-    # Get user input
+    # Get form data 
     result = services.user.get_user_id(request.form)
     if not result:
         return jsonify(""), 403
@@ -38,13 +36,14 @@ def login():
 
 @blueprint.route("/api/guest")
 def guest_login():
+    """Lets user log in as guest"""
     session["user_id"] = 0
     return make_response(jsonify("Logged in as guest"), 200)
 
 
-# Destory user session upon logout
 @blueprint.route("/api/logout")
 def logout():
+    """Destroy user session upon logout"""
     # Forget any user_id
     session.clear()
 

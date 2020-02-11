@@ -5,8 +5,12 @@ from flask_session import Session
 from flask_login import LoginManager
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
-from helpers import login_required, apology
+from .helpers import login_required, apology
 
+# Set upload path and make upload folder if necessary
+UPLOAD_FOLDER = os.path.join(os.pardir, os.pardir, "user_recordings")
+if not os.path.exists(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
 
 # Config variables
 db = SQLAlchemy()
@@ -32,9 +36,13 @@ def create_app():
     app.register_blueprint(controllers.main.blueprint)
     app.register_blueprint(controllers.query.blueprint)
     app.register_blueprint(controllers.user.blueprint)
+    app.register_blueprint(controllers.recording.blueprint)
 
     # For development
     app.config["DEBUG"] = True
+
+    # Configure upload folder path
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
     # Ensure templates are auto-reloaded
     app.config["TEMPLATES_AUTO_RELOAD"] = True
