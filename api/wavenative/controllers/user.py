@@ -27,11 +27,11 @@ def login():
     # Get form data 
     result = services.user.get_user_id(request.form)
     if not result:
-        return jsonify(""), 403
+        return jsonify("Incorrect username or password"), 403
 
     # Remember session and return 200
     session["user_id"] = result
-    return jsonify(""), 200
+    return make_response(jsonify({ "userId": result }), 200)
 
 
 @blueprint.route("/api/guest")

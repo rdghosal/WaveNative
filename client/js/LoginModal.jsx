@@ -7,47 +7,25 @@ const LoginModal = () => {
     const [ isNewUser, toggleUserStatus ] = useState(false); // Switch b/w login and registration
 
     async function handleSubmit(e) {    
-        e.preventDefault();
-        let formData = new FormData();
-        const form = document.getElementsByTagName("form")[0];
-        const formId = form.getAttribute("id")
-        const url = form.getAttribute("action");
-
-        // TODO refactor from iteration to simplying grabbing form element
-        const fieldNames = ["username", "password", "age", "country"];
         
-        let END = (form.getAttribute("id") === "login") ? 2 : fieldNames.length; // Set end of iteration
+        e.preventDefault();
+        const formData = new FormData(e.target);
 
-        for (let i = 0; i < END; i++) { // Iterate over form and memo values
-            let currField = fieldNames[i];
-            let fieldValue = document.getElementsByName(currField)[0].value;
-
-            // Check whether all fields are filled in
-            if (!fieldValue) {
-                return alert(`Please fill in ${currField.toUpperCase()}!`);
-            }
-
-            // Check password if registering
-            if (currentField === "password" && formId === "registration") {
-                if (!checkPassword(fieldValue)) {
-                    return alert("Password must be 8-12 characters long and contain\nat least one upper case and lowercase letter, digit, and special character.");
-                }
-            }
-            formData.append(currField, currEl.value);
-        }
-
-        const response = await fetch(url, {
+        const response = await fetch("/api/login", {
             method: "POST", 
             body: formData
         })
 
-        if (response.ok) { // TODO check if await needed
+        if (response.ok) { // TODO get username
             const data = await response.json();
             const userId = await data.userId;
-            setUser(new User(userId, userTypes.USER));
+            const user = new User(userId, userTypes.USER)
+            sessionStorage.setItem("user", user);
+            setUser(user);
             console.log(currentUser)
-            window.localStorage.setItem("user", currentUser);
+            return;
         } else return; // TODO err handler
+
     }
 
     const loginGuest = async () => {
@@ -72,10 +50,10 @@ const LoginModal = () => {
                     <div className="login-modal__form container">
                         {   !isNewUser
                                 &&  <div>
-                                        <form method="POST" action="/api/login" id="login">
+                                        <form method="POST" id="login" onSubmit={handleSubmit}>
                                             <div className="login-modal__input container">
                                                 <div className="row justify-content-center login-modal__input--text">
-                                                    <input type="text" className="" placeholder="Username"/>
+                                                    <input type="text" className="" name="username" placeholder="Username"/>
                                                 </div>
                                                 <div className="row justify-content-center login-modal__input--text">
                                                     <input type="password" className="" name="password" placeholder="Password"/>
@@ -83,7 +61,9 @@ const LoginModal = () => {
                                             </div>
                                             <div className="login-modal__buttons container">
                                                 <div className="row justify-content-center">
-                                                    <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Log In"/>
+                                                    <button type="submit" className="btn btn-primary" value="Log In">
+                                                        Log In
+                                                    </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -100,13 +80,16 @@ const LoginModal = () => {
                         {
                             isNewUser 
                                 &&  <div>
-                                        <form method="POST" action="/api/register" id="registration">
+                                        <form method="POST" id="registration" onSubmit={ handleSubmit }>
                                             <div className="login-modal__input container">
                                                 <div className="row justify-content-center login-modal__input--text">
                                                     <input type="text" className="" name="username" placeholder="Username"/>
                                                 </div>
                                                 <div className="row justify-content-center login-modal__input--text">
                                                     <input type="password" className="" name="password" placeholder="Password"/>
+                                                </div>
+                                                <div className="row justify-content-center login-modal__input--text">
+                                                    <input type="passowrd" className="" name="confirmation" placeholder="Password"/>
                                                 </div>
                                                 <div className="row justify-content-center login-modal__input--text">
                                                     <input type="text" className="" name="age" placeholder="Age"/>
@@ -116,9 +99,9 @@ const LoginModal = () => {
                                                 </div>
                                             </div>
                                             <div className="login-modal__buttons container">
-                                                <div className="row justify-content-center">
-                                                    <input type="submit" className="btn btn-primary" onSubmit={ handleSubmit } value="Submit"/>
-                                                </div>
+                                                <button type="submit" className="btn btn-primary">
+                                                    Submit
+                                                </button>
                                             </div>
                                         </form>
                                         <div className="row justify-content-center">

@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import { GlobalContext } from "./GlobalContext";
 import { SearchContext } from "./Search";
+import { saveAs } from "file-saver";
 import WaveTypes from "./WaveTypes";
 
 
@@ -17,6 +18,24 @@ const Wave = ({ type, word }) => {
             temp[temp.length-1].userData = data;
             updateWordList(temp);
         });
+    }
+
+    function downloadAudio() {
+        // Build filename
+        const date = Date.now().toString();
+        const suffix = (type === WaveTypes.native) ? "native" : "user";
+
+        // Get blob data based on type
+        let blob = null;
+        if (type === WaveTypes.native) {
+            blob = word.audioData;
+        } else if (type === WaveTypes.playback) {
+            blob = word.userData;
+        }
+
+        console.log(blob)
+        // Save to client device
+        saveAs(blob, `${date}_${word.word}_${suffix}.wav`);
     }
 
     useEffect(() => {
@@ -55,6 +74,7 @@ const Wave = ({ type, word }) => {
                             &&  <>
                                     <button className="btn btn-success col-3" onClick={ () => wavesurfer.play() } >Play</button> 
                                     <button className="btn btn-danger col-3" onClick={ () => wavesurfer.stop() }>Stop</button>
+                                    <button className="btn btn-primary col-3" onClick={ downloadAudio }>Download</button>
                                 </>
                     }
                     {
