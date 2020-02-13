@@ -5,10 +5,18 @@ import { saveAs } from "file-saver";
 import WaveTypes from "./WaveTypes";
 
 
-const Wave = ({ type, word, allowRecording }) => {
+const Wave = ({ 
+    hasPlayed, 
+    setPlayed, 
+    micOn, 
+    toggleMic, 
+    type, 
+    word, 
+    allowRecording 
+}) => {
 
     const { wordList, updateWordList } = useContext(GlobalContext);
-    const { hasPlayed, setPlayed, micOn, toggleMic } = useContext(SearchContext);
+    // const { hasPlayed, setPlayed, micOn, toggleMic } = useContext(SearchContext);
     const [ wavesurfer, setWaveSurfer ] = useState(null);
 
     function appendUserData(data) {
@@ -58,7 +66,7 @@ const Wave = ({ type, word, allowRecording }) => {
             let blob = (type === WaveTypes.native) ? word.audioData : word.userData;
             console.log(blob)
             wavesurfer.loadBlob(blob);
-            setTimeout(() => setPlayed(true), 350); // Delay render of buttons
+            setPlayed ? setTimeout(() => setPlayed(true), 350) : null; // Delay render of buttons
         }
     }, [word, wavesurfer]); // Run any time word or wavesurfer changes
 
@@ -78,7 +86,7 @@ const Wave = ({ type, word, allowRecording }) => {
                 </div>
                 <div className="wave__media-buttons row justify-content-center">
                     {  
-                        type !== WaveTypes.microphone && hasPlayed 
+                        type !== WaveTypes.microphone 
                             &&  <>
                                     <button className="btn btn-success col-3" onClick={ () => wavesurfer.play() } >Play</button> 
                                     <button className="btn btn-danger col-3" onClick={ () => wavesurfer.stop() }>Stop</button>

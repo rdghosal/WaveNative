@@ -65,4 +65,5 @@ def get_user_queries(user_id):
     user_queries = services.query.get_user_queries(user_id)
     if not user_queries:
         return make_response(jsonify("No queries found for user"), 400)
+
     return make_response(jsonify(user_queries), 200)

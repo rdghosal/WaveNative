@@ -20,7 +20,7 @@ const LoginModal = () => {
             const data = await response.json();
             const userId = await data.userId;
             const user = new User(userId, userTypes.USER)
-            sessionStorage.setItem("user", user);
+            sessionStorage.setItem("user", JSON.stringify(user));
             setUser(user);
             console.log(currentUser)
         } else return; // TODO err handler
@@ -30,7 +30,7 @@ const LoginModal = () => {
     const loginGuest = async () => {
         const resp = await fetch("/api/guest");
         if (resp.ok) {
-            const guest = new User(undefined, userTypes.GUEST);
+            const guest = new User(0, userTypes.GUEST);
             sessionStorage.setItem("user", JSON.stringify(guest));
             setUser(guest);
         }

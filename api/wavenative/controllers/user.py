@@ -31,6 +31,7 @@ def login():
 
     # Remember session and return 200
     session["user_id"] = result
+    print(session["user_id"])
     return make_response(jsonify({ "userId": result }), 200)
 
 

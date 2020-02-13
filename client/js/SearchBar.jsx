@@ -42,7 +42,7 @@ const SearchBar = (props) => {
                 if (resp.ok) { // Server returned 200 -> get audio
                     if (errorOccurred) toggleError(false); 
                     fetchAudioData(query);
-                } else toggleError(true);
+                } else if (resp.status === 400) toggleError(true);
             })
     }
 

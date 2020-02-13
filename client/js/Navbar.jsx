@@ -2,6 +2,7 @@ import React, { useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import "./Navbar.css";
+import { userTypes } from "./User";
 
 const Navbar = () => {
     const { currentUser } = useContext(GlobalContext);
@@ -17,7 +18,9 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbar">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item"><Link to="/" className="react-link nav-link">Home</Link></li>
-                        <li className="nav-item"><Link to="/history" className="react-link nav-link">History</Link></li>
+                        <li className="nav-item"><Link to="/search" className="react-link nav-link">Search</Link></li>
+                        { currentUser && currentUser.type === userTypes.USER
+                            && <li className="nav-item"><Link to="/profiles" className="react-link nav-link">Your Profile</Link></li> }
                     </ul>
                 </div>
             </nav>
