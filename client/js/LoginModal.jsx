@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from "react";
+import React, { useContext, useState, Fragment, useEffect } from "react";
 import { GlobalContext } from "./GlobalContext";
 import { userTypes, User } from "./User";
 
@@ -23,7 +23,6 @@ const LoginModal = () => {
             sessionStorage.setItem("user", user);
             setUser(user);
             console.log(currentUser)
-            return;
         } else return; // TODO err handler
 
     }
@@ -34,9 +33,16 @@ const LoginModal = () => {
             const guest = new User(undefined, userTypes.GUEST);
             sessionStorage.setItem("user", JSON.stringify(guest));
             setUser(guest);
-            return;
         }
     }
+
+    useEffect(() => {
+        if (!currentUser) {
+            // Get user from sessionStorage (e.g. for page refresh)
+            const user = JSON.parse(sessionStorage.getItem("user"));
+            setUser(user);
+        }   
+    })
 
     // Conditional rendering depending on user login status
     // TODO: rename container for form and guest/back buttons

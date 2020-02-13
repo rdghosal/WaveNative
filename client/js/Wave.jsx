@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 import WaveTypes from "./WaveTypes";
 
 
-const Wave = ({ type, word }) => {
+const Wave = ({ type, word, allowRecording }) => {
 
     const { wordList, updateWordList } = useContext(GlobalContext);
     const { hasPlayed, setPlayed, micOn, toggleMic } = useContext(SearchContext);
@@ -62,6 +62,14 @@ const Wave = ({ type, word }) => {
         }
     }, [word, wavesurfer]); // Run any time word or wavesurfer changes
 
+    useEffect(() => {
+        // Destroy wave on stop
+        if (type !== WaveTypes.microphone) {
+            return;
+        } else if (!micOn && wavesurfer) {
+        }
+    }, [micOn])
+
     return (
         <Fragment>
             <div className="wave container">
@@ -78,12 +86,12 @@ const Wave = ({ type, word }) => {
                                 </>
                     }
                     {
-                        type === WaveTypes.native && hasPlayed
+                        allowRecording && type === WaveTypes.native && hasPlayed
                             &&      <button className="btn btn-warning col-3" onClick={ () => toggleMic(true) }>
                                         Record</button>
                     }
                     {
-                        type === WaveTypes.microphone && micOn
+                        allowRecording && type === WaveTypes.microphone && micOn
                             &&  (
                                     <button className="btn btn-danger col-5" onClick={ () => { 
                                         wavesurfer.microphone.stop(); 

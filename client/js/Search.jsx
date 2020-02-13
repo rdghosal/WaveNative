@@ -31,11 +31,11 @@ export const Search = (props) => {
                         }
                         {
                             wordList.length > 0
-                                && <Wave type={ WaveTypes.native } word={ wordList[wordList.length-1] } /> 
+                                && <Wave type={ WaveTypes.native } allowRecording={true} word={ wordList[wordList.length-1] } /> 
                         }
                         {
                             wordList.length > 0 && micOn
-                                && <Wave word={ wordList[wordList.length-1] } type={ WaveTypes.microphone }/> 
+                                && <Wave word={ wordList[wordList.length-1] } allowRecording={true} type={ WaveTypes.microphone }/> 
                         }
                         {
                             wordList.length > 0 && wordList[wordList.length-1].userData && !micOn
