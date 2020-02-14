@@ -66,3 +66,26 @@ a:hover {
 .login-modal__input {
     margin-bottom: 0.25rem;
 }
+
+.wave__wave {
+    width: 100%;
+    padding: 3rem 0rem;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.wave__media-buttons {
+    margin: 0 auto;
+}
+
+.wave__media-buttons button {
+    margin: 0.05rem;
+}
+
+
+wave {
+    width: 100%;
+}
+

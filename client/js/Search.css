@@ -24,26 +24,41 @@
     outline: none;
 }
 
-.wave {
-    margin-bottom: 2rem;
+.wave__word-label { 
+    border: 2px solid black;
+    padding-left: 2rem;
+    font-family: "Great Vibes";
+    font-size: 40px;
+ }
+
+ .search__wave-container { 
+    width: 70%;
+    border: 2px solid black;
+    margin-bottom: 4rem;
+ }
+
+.search__wave-container.user {
+    padding: 2rem 0;
 }
 
-.wave__wave {
-    padding: 2rem;
-    margin-bottom: 0.5rem;
+wave > canvas {
+     width: 100%;
+}
+
+.btn-media {
     width: 100%;
 }
 
-wave {
-    width: 100%;
-}
-
-.wave__media-buttons button{
-    margin: 0 1rem;
+.btn-media.record {
+    margin: 1rem 0;
 }
 
 @media screen and (max-width: 980px) {
     .wave__media-buttons button {
         margin: 0;
+    }
+
+    .search__wave-container {
+        width: 95%;
     }
 }

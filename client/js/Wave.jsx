@@ -80,33 +80,47 @@ const Wave = ({
 
     return (
         <Fragment>
-            <div className="wave container">
-                <div className="row justify-content-center">
-                    <div className="wave__wave col" id={type.toLowerCase()}></div>
+            <div className="wave container-fluid">
+                <div className="row h-100">
+                    <div className="wave__wave col-sm-9 align-self-center" id={type.toLowerCase()}></div>
+                    <div className="col-sm-2 align-self-center wave__media-buttons">
+                        {  
+                            type !== WaveTypes.microphone 
+                                &&  <>
+                                        <div className="row">
+                                            <button className="btn btn-success btn-media play" onClick={ () => wavesurfer.play() } >Play</button> 
+                                        </div>
+                                        <div className="row">
+                                            <button className="btn btn-danger btn-media stop" onClick={ () => wavesurfer.stop() }>Stop</button>
+                                        </div>
+                                        <div className="row">
+                                            <button className="btn btn-primary btn-media download" onClick={ downloadAudio }>Download</button>
+                                        </div>
+                                    </>
+                        }
+                        {
+                            allowRecording && type === WaveTypes.microphone && micOn
+                                &&  (
+                                        <div className="row">
+                                            <button className="btn btn-danger btn-media stop-record" onClick={ () => { 
+                                                wavesurfer.microphone.stop(); 
+                                                wavesurfer.destroy();
+                                                toggleMic(false);
+                                            }}>Stop</button>
+                                        </div>
+                                    )
+                        }
+                    </div>
                 </div>
-                <div className="wave__media-buttons row justify-content-center">
-                    {  
-                        type !== WaveTypes.microphone 
-                            &&  <>
-                                    <button className="btn btn-success col-3" onClick={ () => wavesurfer.play() } >Play</button> 
-                                    <button className="btn btn-danger col-3" onClick={ () => wavesurfer.stop() }>Stop</button>
-                                    <button className="btn btn-primary col-3" onClick={ downloadAudio }>Download</button>
-                                </>
-                    }
+                <div className="row justify-content-center">
                     {
                         allowRecording && type === WaveTypes.native && hasPlayed
-                            &&      <button className="btn btn-warning col-3" onClick={ () => toggleMic(true) }>
-                                        Record</button>
-                    }
-                    {
-                        allowRecording && type === WaveTypes.microphone && micOn
                             &&  (
-                                    <button className="btn btn-danger col-5" onClick={ () => { 
-                                        wavesurfer.microphone.stop(); 
-                                        wavesurfer.destroy();
-                                        toggleMic(false);
-                                    }}>Stop</button>
-                                )
+                                    <div className="col text-center">
+                                        <button className="btn btn-warning btn-media record" onClick={ () => toggleMic(true) }>
+                                            Record</button>
+                                    </div>
+                            )
                     }
                 </div>
             </div>

@@ -25,20 +25,27 @@ export const Search = (props) => {
                 <Navbar />
                 <div className="search container-fluid">
                     <SearchBar query={queryString.parse(props.location.search)} />
-                    <div className="container-fluid">
+                    <div className="container-fluid search__wave-container native">
                         {
                             console.log(currentUser)
                         }
                         {
                             wordList.length > 0
-                                && <Wave type={ WaveTypes.native } 
-                                        micOn={micOn} 
-                                        toggleMic={toggleMic} 
-                                        hasPlayed={hasPlayed} 
-                                        setPlayed={setPlayed} 
-                                        allowRecording={true} 
-                                        word={ wordList[wordList.length-1] } /> 
+                                && <> 
+                                        <div className="wave__word-label row">{ wordList[wordList.length-1].word }</div>
+                                        <div className="row">
+                                            <Wave type={ WaveTypes.native } 
+                                                    micOn={micOn} 
+                                                    toggleMic={toggleMic} 
+                                                    hasPlayed={hasPlayed} 
+                                                    setPlayed={setPlayed} 
+                                                    allowRecording={true} 
+                                                    word={ wordList[wordList.length-1] } /> 
+                                        </div>
+                                    </>
                         }
+                    </div>
+                    <div className="container-fluid search__wave-container user">
                         {
                             wordList.length > 0 && micOn
                                 && <Wave word={ wordList[wordList.length-1] } 
