@@ -1,10 +1,8 @@
 import wavenative.services as services
 from flask import Blueprint, request, redirect, session, jsonify, make_response
-from flask_login import LoginManager
 
 
 blueprint = Blueprint(name="user_controller", import_name=__name__)
-login_manager = LoginManager()
 
 @blueprint.route("/api/register", methods=["POST"])
 def register():
@@ -14,8 +12,13 @@ def register():
         return jsonify(""), 400
     
     # Add to database
-    services.user.add_user(request.form) 
-    return jsonify(""), 201
+    services.user.add_user(request.form)
+
+    # Fetch new user info and cache id into session
+    user_info = services.user.get_user_info(request.form)
+    session["user_id"] = user_info.get("id")
+
+    return make_response(jsonify(user_info), 201)
 
 
 @blueprint.route("/api/login", methods=["POST"])
@@ -25,14 +28,13 @@ def login():
     session.clear()
 
     # Get form data 
-    result = services.user.get_user_id(request.form)
-    if not result:
+    user_info = services.user.get_user_info(request.form)
+    if not user_info:
         return jsonify("Incorrect username or password"), 403
 
     # Remember session and return 200
-    session["user_id"] = result
-    print(session["user_id"])
-    return make_response(jsonify({ "userId": result }), 200)
+    session["user_id"] = user_info.get("id")
+    return make_response(jsonify(user_info), 200)
 
 
 @blueprint.route("/api/guest")
@@ -47,7 +49,4 @@ def logout():
     """Destroy user session upon logout"""
     # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
-    return redirect("/")
-
+    return make_response(jsonify("Successfully logged out user"), 200)

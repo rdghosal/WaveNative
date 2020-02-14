@@ -1,11 +1,17 @@
 import React, { useContext, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import "./Navbar.css";
 import { userTypes } from "./User";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const { currentUser } = useContext(GlobalContext);
+
+    const handleLogOut = () => {
+        sessionStorage.removeItem("user");
+        fetch("/api/logout");
+        props.history.push("/");
+    }
 
     return (
         <Fragment>
@@ -19,7 +25,10 @@ const Navbar = () => {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item"><Link to="/search" className="react-link nav-link">Search</Link></li>
                         { currentUser && currentUser.type === userTypes.USER
-                            && <li className="nav-item"><Link to="/profiles" className="react-link nav-link">Your Profile</Link></li> 
+                            &&  <>
+                                    <li className="nav-item"><Link to="/profiles" className="react-link nav-link">Your Profile</Link></li> 
+                                    <li className="nav-item react-link nav-link" onClick={ handleLogOut } id="logout">Log out</li> 
+                                </>
                         }
                     </ul>
                 </div>
@@ -28,4 +37,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar;
+export default withRouter(Navbar);

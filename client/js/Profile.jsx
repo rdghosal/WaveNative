@@ -16,7 +16,7 @@ const Profile = (props) => {
             <Navbar />
             <div className="jumbotron">
                 <div className="display-3 jumbotron__text">
-                    <span>A</span>hoy{currentUser && ", " + currentUser.type} { currentUser && currentUser.id}!
+                    <span>A</span>hoy{currentUser && ", " + currentUser.username}!
                 </div>
             </div>
             <SessionWordList />

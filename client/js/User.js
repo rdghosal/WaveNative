@@ -4,8 +4,9 @@ export const userTypes = {
 }
 
 export class User {
-    constructor(id, type) {
-        this.id = id || null;
+    constructor(id, username, type) {
+        this.id = id;
+        this.username = username || null;
         this.type = type;
     }
 }

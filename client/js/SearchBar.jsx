@@ -1,5 +1,4 @@
 import React, { useContext, Fragment, useEffect, useState } from "react";
-import { SearchContext } from "./Search";
 import { GlobalContext } from "./GlobalContext";
 
 class Word {
@@ -11,13 +10,8 @@ class Word {
 }
 
 const SearchBar = (props) => {
-    const { wordList, updateWordList } = useContext(GlobalContext);
+    const { wordList, currentUser, updateWordList } = useContext(GlobalContext);
     const [ errorOccurred, toggleError ] = useState(false);
-    // const { currentWord, memoWord } = useContext(SearchContext);
-
-    // useEffect(() => {
-    //     console.log(wordList);
-    // }, [wordList])
 
     const fetchAudioData = query => {
         fetch("/api/waveify")
@@ -32,7 +26,6 @@ const SearchBar = (props) => {
 
     const verifyWord = () => {
         // Check if user input is a valid word
-        // TODO: Add error handler
         const query = document.getElementById("search-input").value;
         if (!query) { // Avoid empty string
             return;
@@ -62,7 +55,7 @@ const SearchBar = (props) => {
         <Fragment>
             <div className="search-bar container">
                 <div className="row justify-content-center">
-                    <input type="text" id="search-input" className="col-5" autoFocus={true} onKeyDown={e => {
+                    <input type="text" id="search-input" className="col-5" autoFocus={ currentUser ? true : false } onKeyDown={e => {
                         if(e.keyCode === 13) verifyWord();
                     }}/>
                     <button className="btn btn-primary col-3" onClick={ verifyWord }>Search</button>

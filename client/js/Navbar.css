@@ -5,14 +5,18 @@ nav {
     margin-bottom: 1.5rem;
 }
 
+#logout {
+    cursor: pointer;
+}
+
 .navbar-brand {
-    font-family: "allura";
+    font-family: "allura", "Lucida Sans";
     font-size: 40px;
     letter-spacing: 0.05rem;
 }
 
 .navbar-brand span {
-    font-family: "Great Vibes", "Lucida Grande";
+    font-family: "Great Vibes", "Lucida Grande", "Calibri";
     font-size: 50px;
 }
 

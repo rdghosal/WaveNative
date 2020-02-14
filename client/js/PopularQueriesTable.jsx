@@ -12,12 +12,8 @@ const PopularQueriesTable = ({ userId, history }) => {
                     return response.json()
                 })
                 .then(data => {
-                    let queries = new Object();
-                    for (let key of Object.keys(data)) {
-                        queries[key] = data[key];
-                    }
-                    console.log(queries)
-                    setPopularQueries(queries);
+                    // Save data as state
+                    setPopularQueries(data);
                 });
         }
     }, []);
@@ -50,7 +46,7 @@ const PopularQueriesTable = ({ userId, history }) => {
                                 </tbody>
                             </table>
                         </>
-                    :   <p className="fallback-text">Let's go <Link to="/search">search</Link> some waves!</p>
+                    :   <p className="fallback-text">No searches yet!</p>
 
                 }
         </div>
