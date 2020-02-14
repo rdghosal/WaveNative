@@ -30,7 +30,14 @@ const Wave = ({
 
     function downloadAudio() {
         // Build filename
-        const date = Date.now().toString();
+        // Get current date as string
+        let dateString = new Date().toISOString();
+        const delimiters = ["-", ".", ":"];
+        for (let d of delimiters) {
+            dateString = dateString.split(d).join("")
+        }
+
+        // Label based on type of wave
         const suffix = (type === WaveTypes.native) ? "native" : "user";
 
         // Get blob data based on type
@@ -41,9 +48,8 @@ const Wave = ({
             blob = word.userData;
         }
 
-        console.log(blob)
         // Save to client device
-        saveAs(blob, `${date}_${word.word}_${suffix}.wav`);
+        saveAs(blob, `${dateString}_${word.word}_${suffix}.wav`);
     }
 
     useEffect(() => {
@@ -166,7 +172,7 @@ function createParams(type) {
         default:
             break;
     }
-    console.log(params)
+
     return params;
 }
 
@@ -211,7 +217,6 @@ function initWaveSurfer(type, params, stateUpdater) {
             // and update word object (update global state)
             mediaRecorder.onstop = () => {
                 let playbackBlob = new Blob(chunks);
-                console.log(playbackBlob);
                 stateUpdater(playbackBlob);
             }
 

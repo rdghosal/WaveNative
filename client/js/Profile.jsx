@@ -4,8 +4,9 @@ import { GlobalContext } from './GlobalContext'
 import LoginModal from './LoginModal';
 import SessionWordList from './SessionWordList';
 import PopularQueriesTable from "./PopularQueriesTable"
+import "./Profile.css";
 
-const Profile = () => {
+const Profile = (props) => {
 
     const { currentUser } = useContext(GlobalContext);
 
@@ -13,17 +14,14 @@ const Profile = () => {
         <Fragment>
             <LoginModal />
             <Navbar />
-            <div className="greeting jumbotron">
-                <div className="display-3">
-                    Ahoy{currentUser && ", " + currentUser.type} { currentUser && currentUser.id}!
+            <div className="jumbotron">
+                <div className="display-3 jumbotron__text">
+                    <span>A</span>hoy{currentUser && ", " + currentUser.type} { currentUser && currentUser.id}!
                 </div>
             </div>
-            <h2>Your last searches</h2>
             <SessionWordList />
-            <hr></hr>
-            <h2>Your popular searches</h2>
             {
-                currentUser && <PopularQueriesTable userId={currentUser.id} />
+                currentUser && <PopularQueriesTable history={props.history} userId={currentUser.id} />
             }
         </Fragment>
     )

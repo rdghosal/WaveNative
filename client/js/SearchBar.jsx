@@ -27,7 +27,7 @@ const SearchBar = (props) => {
                         const word = new Word(query, blob);
                         updateWordList([...wordList, word]); // Cache in global state
                     });
-            })
+            });
     }
 
     const verifyWord = () => {
@@ -37,13 +37,14 @@ const SearchBar = (props) => {
         if (!query) { // Avoid empty string
             return;
         }
+        
         fetch(`/api/search?word=${query}`)
             .then(resp => {
                 if (resp.ok) { // Server returned 200 -> get audio
                     if (errorOccurred) toggleError(false); 
                     fetchAudioData(query);
                 } else if (resp.status === 400) toggleError(true);
-            })
+            });
     }
 
     useEffect(() => {

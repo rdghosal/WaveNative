@@ -1,0 +1,113 @@
+.jumbotron {
+    background-color: transparent;
+    padding: 2rem;
+}
+
+.jumbotron__text {
+    font-size: 90px;
+    letter-spacing: 0.25rem;
+    color: #333;
+    font-family: "allura";
+    text-align: center;
+    position: relative;
+    text-shadow: 2px 2px 2px rgba(255, 166, 1, 0.75);
+}
+
+.jumbotron__text span {
+    font-family: "Great Vibes";
+}
+
+.session-wordlist {
+    margin-bottom: 3rem;
+}
+
+.fallback-text {
+    font-size: 30px;
+}
+
+.instructions {
+    font-size: 25px;
+}
+
+.fallback-text, .instructions {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.05rem;
+    font-weight: 50;
+}
+
+.table {
+    text-align: center;
+    outline: none;
+    background-color: rgba(83, 171, 201, 0.5);
+    box-shadow: 0px 2px 5px 1px rgb(190, 190, 190);
+    border-radius: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-color: transparent;
+}
+
+.table td {
+    font-size: 20px;
+}
+
+.popular-queries__table thead {
+    border-bottom: 4px solid rgba(27, 63, 104, 0.75);
+}
+
+.popular-queries__table {
+    margin-bottom: 3rem;
+}
+
+.popular-queries__table thead > tr > th {
+    font-weight: 100;
+    font-size: 22px;
+    letter-spacing: 0.05rem;
+    font-weight: 550;
+    color: rgba(27, 63, 104, 0.75);
+}
+
+.table tbody > tr:hover {
+    background-color: rgba(255, 181, 43, 0.75);
+    /* opacity: 0.25; */
+    cursor: pointer;
+}
+
+.popular-queries__table a {
+    color: #333;
+}
+
+@media (max-width: 650px) {
+
+    h2 {
+        text-align: center;
+        font-size: 35px;
+    }
+
+    .jumbotron {
+        margin-bottom: 1rem;
+    }
+
+    .jumbotron__text {
+        font-size: 70px;
+    }
+
+    .table td {
+        font-size: 16px;
+    }
+
+    .fallback-text {
+        font-size: 25px;
+    }
+
+    .instructions {
+        text-align: center;
+    }
+
+    .popular-queries__header, .session-wordlist__header {
+        justify-content: center;
+    }
+
+    .popular-queries__header h2, .session-wordlist__header h2 {
+        text-align: center;
+        padding-left: 0 !important;
+    }
+}

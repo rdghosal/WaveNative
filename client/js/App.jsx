@@ -11,7 +11,7 @@ const App = () => {
     return (
         <Router>
             <Switch>
-                <Route path="/" exact render={() =><GlobalProvider><Landing /></GlobalProvider>} />
+                <Route path="/" exact render={(props) =><GlobalProvider><Landing {...props} /></GlobalProvider>} />
                 <Route path="/search/:word?" render={(props) => <GlobalProvider><Search {...props}/></GlobalProvider>} />
                 <Route path="/profiles/:userId?" render={() => <GlobalProvider><Profile /></GlobalProvider>} /> 
             </Switch>

@@ -31,36 +31,41 @@ export const Search = (props) => {
                         }
                         {
                             wordList.length > 0
-                                && <> 
-                                        <div className="wave__word-label row">{ wordList[wordList.length-1].word }</div>
-                                        <div className="row">
-                                            <Wave type={ WaveTypes.native } 
-                                                    micOn={micOn} 
-                                                    toggleMic={toggleMic} 
-                                                    hasPlayed={hasPlayed} 
-                                                    setPlayed={setPlayed} 
-                                                    allowRecording={true} 
-                                                    word={ wordList[wordList.length-1] } /> 
-                                        </div>
+                                &&  <> 
+                                        {/* <div className="wave__word-label">{ wordList[wordList.length-1].word }</div>  */}
+                                        <Wave type={ WaveTypes.native } 
+                                                micOn={micOn} 
+                                                toggleMic={toggleMic} 
+                                                hasPlayed={hasPlayed} 
+                                                setPlayed={setPlayed} 
+                                                allowRecording={true} 
+                                                word={ wordList[wordList.length-1] } /> 
                                     </>
                         }
                     </div>
-                    <div className="container-fluid search__wave-container user">
                         {
                             wordList.length > 0 && micOn
-                                && <Wave word={ wordList[wordList.length-1] } 
-                                        micOn={ micOn } 
-                                        toggleMic={toggleMic} 
-                                        hasPlayed={hasPlayed} 
-                                        setPlayed={setPlayed} 
-                                        allowRecording={true} 
-                                        type={ WaveTypes.microphone }/> 
+                                &&  
+                                    <>
+                                        <div className="container-fluid search__wave-container user">
+                                            <Wave word={ wordList[wordList.length-1] } 
+                                                micOn={ micOn } 
+                                                toggleMic={toggleMic} 
+                                                hasPlayed={hasPlayed} 
+                                                setPlayed={setPlayed} 
+                                                allowRecording={true} 
+                                                type={ WaveTypes.microphone }/> 
+                                        </div>
+                                    </>
                         }
                         {
                             wordList.length > 0 && wordList[wordList.length-1].userData && !micOn
-                                && <Wave type={ WaveTypes.playback } word={ wordList[wordList.length - 1] } />
+                                &&  <>
+                                        <div className="container-fluid search__wave-container user">
+                                            <Wave type={ WaveTypes.playback } word={ wordList[wordList.length - 1] } />
+                                        </div>
+                                    </>
                         }
-                    </div>
                 </div>
             </SearchContext.Provider>
         </Fragment>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const PopularQueriesTable = ({ userId }) => {
+const PopularQueriesTable = ({ userId, history }) => {
 
     const [ popularQueries, setPopularQueries ] = useState(null);
 
@@ -9,7 +9,6 @@ const PopularQueriesTable = ({ userId }) => {
         if (!popularQueries) {
             fetch(`/api/queries/${userId}`)
                 .then(response => {
-                    console.log(response)
                     return response.json()
                 })
                 .then(data => {
@@ -24,28 +23,38 @@ const PopularQueriesTable = ({ userId }) => {
     }, []);
 
     return (
-        <div className="popular-queries-table container">
-            <table className="table table-dark">
-                <thead>
-                    <tr>
-                        <th>
-                            Word
-                        </th>
-                        <th>
-                            Number of times searched
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        popularQueries 
-                            && Object.keys(popularQueries).map((key, i) => <tr key={i}><td><Link to={`/search?word=${key}`}>{key}</Link></td><td>{ popularQueries[key] }</td></tr>)
-                    }
-                </tbody>
-            </table>
-            
-        </div>
-    )
-}
+        <div className="container-fluid">
+            <div className="popular-queries__header row justify-content-left">
+                <h2>Your popular searches</h2>
+            </div>
+            {
+                popularQueries
+                    ?   <>
+                            <p className="instructions">Click a row to search the wave again!</p>
+                            <table className="popular-queries__table table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Word
+                                        </th>
+                                        <th>
+                                            Number of times searched
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        popularQueries 
+                                            && Object.keys(popularQueries).map((key, i) =><tr key={i} onClick={() => history.push(`/search?word=${key}`)}><td>{key}</td><td>{ popularQueries[key] }</td></tr>)
+                                    }
+                                </tbody>
+                            </table>
+                        </>
+                    :   <p className="fallback-text">Let's go <Link to="/search">search</Link> some waves!</p>
 
-export default PopularQueriesTable
+                }
+        </div>
+        )
+    }
+
+    export default withRouter(PopularQueriesTable);
