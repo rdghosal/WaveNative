@@ -2,7 +2,6 @@ import os
 from flask import Flask, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
-from flask_login import LoginManager
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from .helpers import login_required, apology
@@ -12,10 +11,9 @@ UPLOAD_FOLDER = os.path.join(os.pardir, "user_recordings")
 if not os.path.exists(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
-# Config variables
+# DAO and Session singletons
 db = SQLAlchemy()
 sess = Session()
-# login_manager = LoginManager()
 
 
 # TODO: Edit error handler
@@ -54,11 +52,8 @@ def create_app():
     app.config["SESSION_TYPE"] = "filesystem"
     sess.init_app(app)
 
-    # Login configuration
-    # login_manager.init_app(app)
-
     # SQLAlchemy ORM config
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI_DEV")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     

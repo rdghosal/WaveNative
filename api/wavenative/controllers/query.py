@@ -4,6 +4,7 @@ from io import BytesIO
 from flask import Blueprint, request, jsonify, send_file, session, make_response
 
 
+API_KEY = os.getenv("API_KEY")
 WORD_DETAILS_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/{0}?key={1}"
 
 # To be registered by app.py
@@ -15,7 +16,6 @@ blueprint = Blueprint(name="query_controller", import_name=__name__)
 def search():
     """Searches Merriam Webster (MW) for word
     and caches URL file thereof if valid"""
-    api_key = os.getenv("API_KEY")
     session["current_word"] = curr_word = request.args.get("word")
     # session[session["current_word"]] = None
 
@@ -24,7 +24,7 @@ def search():
 
     if not audio_url:
         # Get audio url from MW API
-        response = requests.get(WORD_DETAILS_URL.format(session["current_word"], api_key))
+        response = requests.get(WORD_DETAILS_URL.format(session["current_word"], API_KEY))
         if response.status_code != 200:
             return jsonify("Invalid query"), 400       
 
