@@ -14,7 +14,7 @@ const SearchBar = (props) => {
     const [ errorOccurred, toggleError ] = useState(false);
 
     const fetchAudioData = query => {
-        fetch("/api/waveify")
+        fetch(`/api/waveify?word=${query}`)
             .then(stream => {
                 stream.blob()
                     .then(blob => {
@@ -31,7 +31,7 @@ const SearchBar = (props) => {
             return;
         }
         
-        fetch(`/api/search?word=${query}`)
+        fetch(`/api/search?word=${query}&userId=${currentUser.id}`)
             .then(resp => {
                 if (resp.ok) { // Server returned 200 -> get audio
                     if (errorOccurred) toggleError(false); 

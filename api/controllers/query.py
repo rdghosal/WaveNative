@@ -16,29 +16,26 @@ blueprint = Blueprint(name="query_controller", import_name=__name__)
 def search():
     """Searches Merriam Webster (MW) for word
     and caches URL file thereof if valid"""
-    session["current_word"] = curr_word = request.args.get("word")
-    # session[session["current_word"]] = None
+    curr_word = request.args.get("word")
+    curr_user_id = request.args.get("userId")
 
     # Check database for url if query had been previously made
     audio_url = services.query.get_audio_url(curr_word)
 
     if not audio_url:
         # Get audio url from MW API
-        response = requests.get(WORD_DETAILS_URL.format(session["current_word"], API_KEY))
+        response = requests.get(WORD_DETAILS_URL.format(curr_word, API_KEY))
         if response.status_code != 200:
             return jsonify("Invalid query"), 400       
 
         # Extract url from JSON and cache
         data = response.json()[0]
-        session["current_audio_url"] = services.query.extract_audio_url(data)
-        services.query.add_query(curr_word, session["current_audio_url"])
-
-    else: 
-        session["current_audio_url"] = audio_url
+        audio_url = services.query.extract_audio_url(data)
+        services.query.add_query(curr_word, audio_url)
 
     # Add UserQuery to database
-    if session["user_id"] > 0:
-        services.query.add_user_query(session["user_id"], curr_word)
+    if int(curr_user_id) > 0:
+        services.query.add_user_query(curr_user_id, curr_word)
 
     return jsonify("Valid query"), 200
 
@@ -46,11 +43,13 @@ def search():
 @blueprint.route("/api/waveify")
 def get_wav_data():
     """Sends wav data from MW API"""
-    # Get binary data from MW API and cache 
-    data = requests.get(session["current_audio_url"]).content
-    session[session["current_word"]] = data 
+    # Get requested word and query db for audio url
+    word = request.args.get("word")
+    audio_url = services.query.get_audio_url(word)
 
-    # Send wav file to client
+    # Fetch audio file from MW API
+    # and send to client
+    data = requests.get(audio_url).content
     return send_file(BytesIO(data), mimetype='audio/wav')
 
 
