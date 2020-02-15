@@ -4,13 +4,14 @@ import { GlobalContext } from "./GlobalContext";
 import "../css/Navbar.css";
 import { userTypes } from "./User";
 
-const Navbar = (props) => {
-    const { currentUser } = useContext(GlobalContext);
+const Navbar = () => {
+    const { currentUser, setUser } = useContext(GlobalContext);
 
     const handleLogOut = () => {
         sessionStorage.removeItem("user");
+        window.location.href = "/";
+        setUser(null);
         fetch("/api/logout");
-        props.history.push("/");
     }
 
     return (
@@ -37,4 +38,4 @@ const Navbar = (props) => {
     );
 }
 
-export default withRouter(Navbar);
+export default Navbar;

@@ -63,6 +63,4 @@ def get_user_queries(user_id):
     
     # Retrieve unique queries for user from database
     user_queries = services.query.get_user_queries(user_id)
-    if not user_queries:
-        return None
     return make_response(jsonify(user_queries), 200)

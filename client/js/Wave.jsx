@@ -70,7 +70,6 @@ const Wave = ({
         } else {
             // Load data into wavesurfer
             let blob = (type === WaveTypes.native) ? word.audioData : word.userData;
-            console.log(blob)
             wavesurfer.loadBlob(blob);
             setPlayed ? setTimeout(() => setPlayed(true), 350) : null; // Delay render of buttons
         }

@@ -20,12 +20,14 @@ const LoginModal = (props) => {
         
         e.preventDefault();
 
-        console.log(e.value)
-
         const formData = new FormData(e.target);
 
         const formId = document.getElementsByTagName("form")[0].id;
         const url = (formId === "login") ? "/api/login" : "/api/register";
+
+        if (formId === "registration") {
+            if (!validateFormData(formData)) return false;
+        }
 
         const response = await fetch(url, {
             method: "POST", 
@@ -33,7 +35,6 @@ const LoginModal = (props) => {
         })
 
         if (response.ok) {
-
             // Parse JSON
             const data = await response.json();
             const userId = await data.id;
@@ -47,8 +48,10 @@ const LoginModal = (props) => {
             // Redirect to profile
             props.history.push(`/profiles/${userId}`)
     
-        } else return null; // TODO err handler
-
+        } else if (response.status === 403 && formId === "login") {
+            window.alert("Username or password incorrect.");
+            return false;
+        } else return null; // TODO add more err handling
     }
 
     useEffect(() => {
@@ -88,10 +91,10 @@ const LoginModal = (props) => {
                                                     </button>
                                                 </div>
                                                 <div className="row justify-content-center">
-                                                    <button className="btn btn-success" onClick={ () => toggleUserStatus(true) }>Sign Up</button>
+                                                    <button type="button" className="btn btn-success" onClick={ () => toggleUserStatus(true) }>Sign Up</button>
                                                 </div>
                                                 <div className="row justify-content-center">
-                                                    <button className="btn btn-secondary" onClick={ loginGuest }>
+                                                    <button className="btn btn-secondary" type="button" onClick={ loginGuest }>
                                                         Continue as guest
                                                     </button>
                                                 </div>
@@ -144,8 +147,44 @@ const LoginModal = (props) => {
     return null;
 }
 
+
+function validateFormData(formData) {
+    // Get form entry values
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const confirmation = formData.get("confirmation");
+    const age = formData.get("age");
+    const country = formData.get("country"); //TODO add validation
+
+    // Check if fields are empty
+    for (var field of [ username, password, confirmation, age, country ]) {
+        if (!field) {
+            window.alert("All fields must be completed for registration.");
+            return false; 
+        }
+    }
+    
+    let valid = false;
+
+    // Check password
+    if (!checkPassword(password)) {
+        window.alert("Password must be at least 8 characters long with at least one of each: capital letter, number, special character");
+    } else if (!parseInt(age)) {
+        window.alert("Age must be a number.");
+    } else if (confirmation !== password) {
+        window.alert("Password and confirmation do not match.");
+    } else {
+        valid = true;
+    }
+
+    return valid;
+}
+
 function checkPassword(password) {
-    return;
+    const regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+    if (!password.match(regex)) {
+        return false;
+    } else return true;
 }
 
 export default withRouter(LoginModal);

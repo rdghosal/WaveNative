@@ -13,7 +13,7 @@ const App = () => {
             <Switch>
                 <Route path="/" exact render={(props) =><GlobalProvider><Landing {...props} /></GlobalProvider>} />
                 <Route path="/search/:word?" render={(props) => <GlobalProvider><Search {...props}/></GlobalProvider>} />
-                <Route path="/profiles/:userId?" render={() => <GlobalProvider><Profile /></GlobalProvider>} /> 
+                <Route path="/profiles/:userId?" render={(props) => <GlobalProvider><Profile {...props} /></GlobalProvider>} /> 
             </Switch>
         </Router>
     );

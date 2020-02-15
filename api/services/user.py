@@ -9,7 +9,6 @@ def check_form_data(form):
     if form["password"] != form["confirmation"] or \
         db.session.query(User).filter(User.username == form["username"]).count() > 0:
         return False
-    print("ok")
     return True
 
 

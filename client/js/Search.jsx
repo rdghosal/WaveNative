@@ -27,9 +27,6 @@ export const Search = (props) => {
                     <SearchBar query={queryString.parse(props.location.search)} />
                     <div className="container-fluid search__wave-container native">
                         {
-                            console.log(currentUser)
-                        }
-                        {
                             wordList.length > 0
                                 &&  <> 
                                         {/* <div className="wave__word-label">{ wordList[wordList.length-1].word }</div>  */}
