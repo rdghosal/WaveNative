@@ -37,7 +37,7 @@ def create_app():
     app.register_blueprint(controllers.recording.blueprint)
 
     # For development
-    app.config["DEBUG"] = True
+    app.config["DEBUG"] = False
 
     # Configure upload folder path
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -53,7 +53,7 @@ def create_app():
     sess.init_app(app)
 
     # SQLAlchemy ORM config
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI_DEV")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     
