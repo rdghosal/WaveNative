@@ -1,7 +1,7 @@
 import React, { useContext, Fragment } from "react";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
-import "./Navbar.css";
+import "../css/Navbar.css";
 import { userTypes } from "./User";
 
 const Navbar = (props) => {

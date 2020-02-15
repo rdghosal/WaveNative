@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import "./Landing.css"
+import "../css/Landing.css"
 import { Link, withRouter } from 'react-router-dom';
 
 const Landing = (props) => {

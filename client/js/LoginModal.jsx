@@ -47,7 +47,7 @@ const LoginModal = (props) => {
             // Redirect to profile
             props.history.push(`/profiles/${userId}`)
     
-        } else window.alert("Check form and try again"); // TODO err handler
+        } else return null; // TODO err handler
 
     }
 

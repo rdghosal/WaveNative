@@ -4,7 +4,7 @@ import { GlobalContext } from './GlobalContext'
 import LoginModal from './LoginModal';
 import SessionWordList from './SessionWordList';
 import PopularQueriesTable from "./PopularQueriesTable"
-import "./Profile.css";
+import "../css/Profile.css";
 
 const Profile = (props) => {
 

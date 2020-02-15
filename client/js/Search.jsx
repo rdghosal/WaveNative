@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import Navbar from "./Navbar";
 import WaveTypes from "./WaveTypes";
-import "./Search.css"
+import "../css/Search.css"
 import { GlobalContext } from "./GlobalContext";
 import LoginModal from "./LoginModal";
 import Wave from "./Wave";

@@ -4,7 +4,7 @@ import { GlobalProvider } from "./GlobalContext";
 import Landing from "./Landing";
 import { Search } from "./Search";
 import Profile from "./Profile";
-import "./App.css";
+import "../css/App.css";
 
 const App = () => {
     // Render routes embedded in global context
