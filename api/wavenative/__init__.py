@@ -37,7 +37,7 @@ def create_app():
     app.register_blueprint(controllers.recording.blueprint)
 
     # For development
-    app.config["DEBUG"] = True
+    app.config["DEBUG"] = False
 
     # Configure upload folder path
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
