@@ -7,9 +7,9 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from .helpers import login_required, apology
 
 # Set upload path and make upload folder if necessary
-UPLOAD_FOLDER = os.path.join(os.pardir, "user_recordings")
-if not os.path.exists(UPLOAD_FOLDER):
-    os.mkdir(UPLOAD_FOLDER)
+# UPLOAD_FOLDER = os.path.join(os.pardir, "user_recordings")
+# if not os.path.exists(UPLOAD_FOLDER):
+#     os.mkdir(UPLOAD_FOLDER)
 
 # DAO and Session singletons
 db = SQLAlchemy()
@@ -40,7 +40,7 @@ def create_app():
     app.config["DEBUG"] = False
 
     # Configure upload folder path
-    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+    # app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
     # Ensure templates are auto-reloaded
     app.config["TEMPLATES_AUTO_RELOAD"] = True
