@@ -1,28 +1,31 @@
 # WaveNative
-Last updated: 27 December 2019
-## 1. Purpose
-WaveNative is a single-page web application that provides users soundwave visualizations of native pronunciations<br>
-and allows them to emulate the same.
+```
+Last updated: 15 February 2020
+```
 
-## 2. Technologies
-WaveNative implements React.js in the front-end to provide the user a seamless interface and utilize service workers<br>
-in order to reach users with less-than-ideal network connections.
-As for the back-end, WaveNative uses a Flask API in order to leverage the Python ecosystem and provide the user detailed quantitative feedback.<br>
-Specifically, the following technologies are used:
-### 1. Front-End (JavaScript)
-- React.js (front-end libary)
+## 1. Release History
+> __Current URL__: [https://wave-native.herokuapp.com](https://wave-native.herokuapp.com)
+- Initial release: 15 February 2020
+
+## 2. Purpose
+WaveNative is a single-page web application that visualizes English words pronunced by native speakers.<br>
+The user is prompted to record their own attempts at pronunciation and may register a username in order to keep a record of words they frequently query.
+
+## 3. Technologies
+### 1. Front-End
+- [React](https://reactjs.org/)
 - [WaveSurfer.js](https://wavesurfer-js.org/) (libary for sound visualizations) 
-### 2. Back-End (Python)
-- Flask (microframework for API routing)
-- [Parselmouth](https://parselmouth.readthedocs.io/en/stable/) (library for Praat via Python to provide audio processing and quantitative feedback) - Adoption TBD
+### 2. Back-End
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 ### 3. Database (SQL)
-- PostgreSQL via Heroku
-### 4. Third-party APIs
+- [PostgreSQL](https://www.postgresql.org/)
+### 4. Deployment
+- [Heroku](https://www.heroku.com/)
+### 5. Third-party APIs
 - [Merriam-Webster](https://dictionaryapi.com/) for native English audio recordings
 
-## 3. TODO
-- The project is under construction, with UI issues yet to be resolved.
-- Feedback to the user is currently limited to soundwave images of words<br>
-  and an algorithm for quantitative feedback has not yet been devised or implemented.
-- While boilerplate for database writes/reads can be found in the back-end code, the front-end has yet to reflect this<br>
-  with an option for user login/registration.
+## 4. TODO
+- Integrate better work-arounds/fallbacks for browsers that do not support the [MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) being used for audio recording.<br>
+(Currently only Chrome and Firefox allow user recording) 
+- Implement service workers to make the app more accessible for users with poor Internet connectivity (that is, more *progressive*)
+- Leverage Python ecosystem to provide richer quantitative feedback for the user to assess their progress in word pronunciation 
