@@ -66,8 +66,7 @@ const LoginModal = (props) => {
     // TODO: rename container for form and guest/back buttons
     if (!sessionStorage.getItem("user")) {
         return (
-            <Fragment>
-                <div className="backdrop">
+            <div className="backdrop">
                 <div className="login-modal container">
                     <div className="row justify-content-center">
                         <h5 className="modal-title" id="loginModalTitle">{!isNewUser ? "Login" : "Register"}</h5>
@@ -138,8 +137,7 @@ const LoginModal = (props) => {
                         }
                     </div>
                 </div>
-                </div>
-            </Fragment>
+            </div>
         );
     }
 

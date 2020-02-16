@@ -7,20 +7,18 @@
     padding: 0;
 }
 
-html, body {
+html, body, #content {
     width: 100%;
     height: 100%;
+}
+
+html, body {
     overflow-x: hidden;
     position: relative;
 }
 
 body {
     background-color: rgba(142, 201, 211, 0.25);
-}
-
-#content {
-    height: 100%;
-    /* position: relative; */
 }
 
 button:hover, a:hover {

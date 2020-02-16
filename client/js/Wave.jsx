@@ -119,11 +119,12 @@ const Wave = ({
                 </div>
                 <div className="row justify-content-center">
                     {
-                        allowRecording && type === WaveTypes.native && hasPlayed
+                        allowRecording && type === WaveTypes.native && hasPlayed && validBrowser()
                             &&  (
                                     <div className="col text-center">
                                         <button className="btn btn-warning btn-media record" onClick={ () => toggleMic(true) }>
-                                            Record</button>
+                                            Record
+                                        </button>
                                     </div>
                             )
                     }
@@ -131,6 +132,21 @@ const Wave = ({
             </div>
         </Fragment>
     );
+}
+
+
+function validBrowser() {
+    // Parse userAgent info and check for unsupported browser
+    const userAgent = navigator.userAgent;
+    const unsupportedBroswers = [ "Edge", "IE", "Opera", "SamsungBrowser" ];
+    for (var browser of unsupportedBroswers) {
+        if (userAgent.indexOf(browser) !== -1) {
+            console.log(browser)
+            return false;
+        }
+    }
+
+    return true;
 }
 
 
