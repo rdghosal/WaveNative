@@ -26,7 +26,7 @@ const SearchBar = (props) => {
 
     const verifyWord = () => {
         // Check if user input is a valid word
-        const query = document.getElementById("search-input").value;
+        const query = document.getElementById("search-input").value.toLowerCase();
         if (!query) { // Avoid empty string
             return;
         }
