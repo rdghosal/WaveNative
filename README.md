@@ -16,12 +16,12 @@ The user is prompted to record their own attempts at pronunciation and may regis
 - [React](https://reactjs.org/)
 - [WaveSurfer.js](https://wavesurfer-js.org/) (libary for sound visualizations) 
 ### 2. Back-End
+- [gunicorn](https://gunicorn.org/)
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/)
-### 3. Database (SQL)
 - [PostgreSQL](https://www.postgresql.org/)
-### 4. Deployment
+### 3. Deployment
 - [Heroku](https://www.heroku.com/)
-### 5. Third-party APIs
+### 4. Third-Party APIs
 - [Merriam-Webster](https://dictionaryapi.com/) for native English audio recordings
 
 ## 4. TODO
